@@ -56,7 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Rhino\LoftSplitComponent.cs" />
+    <Compile Include="RH\LoftSplitComponent.cs" />
     <Compile Include="CyborgInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

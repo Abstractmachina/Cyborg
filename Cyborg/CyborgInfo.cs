@@ -26,7 +26,7 @@ namespace Cyborg
             get
             {
                 //Return a short string describing the purpose of this GHA library.
-                return "";
+                return "Custom Functionality for Grasshopper";
             }
         }
         public override Guid Id
@@ -42,7 +42,7 @@ namespace Cyborg
             get
             {
                 //Return a string identifying you or your company.
-                return "";
+                return "Taole Chen";
             }
         }
         public override string AuthorContact
