@@ -26,8 +26,6 @@ namespace Cyborg.RH.NURBS
               "Cyborg", "NURBS")
         {
 
-            isStraight = true;
-
         }
 
         /// <summary>
@@ -36,7 +34,18 @@ namespace Cyborg.RH.NURBS
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddCurveParameter("Curves", "C", "Curves to loft.", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Loft Options", "O", "Loft Options", GH_ParamAccess.item);
+
+            var optionsID = new Guid("{A8DA9901-F5FB-49ec-9CD1-DFA7B788263E}");
+            var options = Grasshopper.Instances.ComponentServer.EmitObject(optionsID) as IGH_Param;
+
+            if (options == null) return;
+
+            options.Name = "Loft Options";
+            options.NickName = "O";
+            options.Description = "Additional Options";
+            options.Optional = true;
+            options.Access = GH_ParamAccess.item;
+            pManager.AddParameter(options);
         }
 
         /// <summary>
@@ -52,54 +61,86 @@ namespace Cyborg.RH.NURBS
         /// </summary>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            var sections = new List<Curve>();
+            if (!DA.GetDataList("Curves", sections)) return;
 
-
-
-            Grasshopper.Kernel.Types.GH_ObjectWrapper test = new Grasshopper.Kernel.Types.GH_ObjectWrapper();
-            if (!DA.GetData("Loft Options", ref test)) return;
-
-            AddRuntimeMessage(GH_RuntimeMessageLevel.Remark, test.ToString());
-
-            List<Curve> crvs = new List<Curve>();
-
-            if (!DA.GetDataList("Curves", crvs)) return;
-
-            if (crvs.Count < 2)
+            if (sections.Count < 2)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Need at least 2 curves for loft.");
                 return;
             }
 
-
             //check if curve structures match
             //get number of control points for all crvs in list
-            var ptCount = crvs.Select(c =>
+            var ptCount = sections.Select(c =>
             {
                 var nc = c.ToNurbsCurve();
                 return nc.Points.Count;
             }).ToList();
 
-            if (ptCount.Any(o => o != ptCount[0])) AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Results may be unpredictable if curve structures differ.");
+            if (ptCount.Any(o => o != ptCount[0]))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Curves must have identical structure.");
+                return;
+            }
 
 
+            object options = null;
+            bool useDefault = false;
+            if (!DA.GetData(1, ref options)) useDefault = true;
+            if (options == null) useDefault = true;
+
+            var lofts = new List<Brep>();
+            if (useDefault) lofts = LoftSplit(sections);
+            else
+            {
+                var adjustSeams = (bool)Grasshopper.Utility.InvokeGetter(options, "AdjustSeams");
+                var closedLoft = (bool)Grasshopper.Utility.InvokeGetter(options, "ClosedLoft");
+                var rebuildCount = (int)Grasshopper.Utility.InvokeGetter(options, "RebuildCount");
+                var refitTolerance = (double)Grasshopper.Utility.InvokeGetter(options, "RefitTolerance");
+                var loftType = (int)Grasshopper.Utility.InvokeGetter(options, "LoftType");
+                //var loftFit = (int)Grasshopper.Utility.InvokeGetter(options, "LoftFit");
+
+                LoftOptions opt = new LoftOptions(adjustSeams, closedLoft, rebuildCount, refitTolerance, loftType);
+
+                lofts = LoftSplit(sections, opt);
+            }
+
+            DA.SetDataList("Loft Output", lofts);
+
+        }
+
+        /// <summary>
+        /// Main loftsplit method with default options.
+        /// </summary>
+        /// <param name="crvs"></param>
+        /// <returns></returns>
+        public List<Brep> LoftSplit(List<Curve> crvs)
+        {
+            LoftOptions options = new LoftOptions(false, false, 0, 0, (int) LoftType.Straight);
+            return LoftSplit(crvs, options);
+        }
+
+        /// <summary>
+        /// Main method. Split curves at tangency discontinuities and loft resulting segments. 
+        /// </summary>
+        /// <param name="crvs"></param>
+        /// <returns></returns>
+        public List<Brep> LoftSplit(List<Curve> crvs, LoftOptions options)
+        {
+            
             var exCrvs = new List<List<Curve>>();
 
             //explode crv
             foreach (var c in crvs)
             {
-
                 var L = new List<Curve>();
-                if (!CurveSegments(ref L, c, true)) AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Explode has failed.");
-
-                //get tangent positions
-                //must be sorted by type? 
-                //split at param t
-                //store result in list
+                if (!ExplodeCurveSegments(ref L, c, true)) AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Explode has failed.");
                 else exCrvs.Add(L);
             }
 
-            if (exCrvs.Count == 0) return;
-            if (exCrvs == null) return;
+            if (exCrvs.Count == 0) return null;
+            if (exCrvs == null) return null;
 
             int numberOfLofts = exCrvs[0].Count;
 
@@ -118,20 +159,17 @@ namespace Cyborg.RH.NURBS
 
             }
 
-            DA.SetDataList("Loft Output", lofts);
-
-
+            return lofts;
         }
-
 
         /// <summary>
         /// Explode Curve into segments. Method provided by David Rutten.
         /// </summary>
-        /// <param name="L"></param>
-        /// <param name="crv"></param>
+        /// <param name="L">Exploded curve segments.</param>
+        /// <param name="crv">Curve to explode</param>
         /// <param name="recursive"></param>
         /// <returns></returns>
-        protected bool CurveSegments(ref List<Curve> L, Curve crv, bool recursive)
+        protected bool ExplodeCurveSegments(ref List<Curve> L, Curve crv, bool recursive)
         {
             if (crv == null) { return false; }
 
@@ -149,7 +187,7 @@ namespace Cyborg.RH.NURBS
                 {
                     foreach (Curve S in segments)
                     {
-                        CurveSegments(ref L, S, recursive);
+                        ExplodeCurveSegments(ref L, S, recursive);
                     }
                 }
                 else
@@ -246,64 +284,6 @@ namespace Cyborg.RH.NURBS
             return true;
         }
 
-
-        
-        private LoftType loftType = LoftType.Straight;
-        public LoftType LoftType_p
-        {
-            get { return loftType; }
-            set {
-
-                loftType = value;
-                if (loftType == LoftType.Straight) Message = "Straight";
-                if (loftType == LoftType.Normal) Message = "Normal";
-                if (loftType == LoftType.Loose) Message = "Loose";
-                if (loftType == LoftType.Tight) Message = "Tight";
-                if (loftType == LoftType.Uniform) Message = "Uniform";
-
-            }
-        }
-
-        public bool isStraight = true;
-        public bool isNormal = false;
-        public bool isLoose = false;
-        public bool isTight = false;
-        public bool isUniform = false;
-
-        public override bool Write(GH_IWriter writer)
-        {
-            writer.SetBoolean("Straight", isStraight);
-            return base.Write(writer);
-        }
-
-        public override bool Read(GH_IReader reader)
-        {
-            if (isStraight) Message = "Straight";
-            reader.GetBoolean("Straight");
-            return base.Read(reader);
-            
-        }
-
-        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
-        {
-
-            ToolStripMenuItem str = Menu_AppendItem(menu, "Straight", Menu_AbsoluteClicked, true, true);
-            ToolStripMenuItem nor = Menu_AppendItem(menu, "Normal", Menu_AbsoluteClicked, true, false);
-            ToolStripMenuItem loo = Menu_AppendItem(menu, "Loose", Menu_AbsoluteClicked, true, false);
-            ToolStripMenuItem tig = Menu_AppendItem(menu, "Tight", Menu_AbsoluteClicked, true, false);
-            ToolStripMenuItem uni = Menu_AppendItem(menu, "Uniform", Menu_AbsoluteClicked, true, false);
-
-
-        }
-
-        private void Menu_AbsoluteClicked(object sender, EventArgs e)
-        {
-            RecordUndoEvent("Straight");
-            isStraight = !isStraight;
-
-            
-            ExpireSolution(true);
-        }
 
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.
