@@ -56,11 +56,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Vector2d.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RH\ExtendFilletComponent.cs" />
     <Compile Include="RH\Types.cs" />
     <Compile Include="RH\LoftSplitComponent.cs" />
     <Compile Include="CyborgInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Bitmap1.bmp" />
+    <None Include="Resources\FilletExtend.png" />
+    <None Include="Resources\LoftSplit.png" />
+    <None Include="Resources\cyborg_logo.png" />
+    <None Include="Resources\cyborg_logo-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mesh\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

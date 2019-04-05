@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using Grasshopper.Kernel;
+using System.IO;
+using Cyborg.Properties;
 
 namespace Cyborg
 {
@@ -18,7 +20,7 @@ namespace Cyborg
             get
             {
                 //Return a 24x24 pixel bitmap to represent this GHA library.
-                return null;
+                return Resources.cyborg_logo;
             }
         }
         public override string Description

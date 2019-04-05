@@ -7,6 +7,7 @@ using Rhino.Geometry;
 using System.Linq;
 using GH_IO.Serialization;
 using System.Windows.Forms;
+using Cyborg.Properties;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -115,7 +116,7 @@ namespace Cyborg.RH.NURBS
         /// </summary>
         /// <param name="crvs"></param>
         /// <returns></returns>
-        public List<Brep> LoftSplit(List<Curve> crvs)
+        internal List<Brep> LoftSplit(List<Curve> crvs)
         {
             LoftOptions options = new LoftOptions(false, false, 0, 0, (int) LoftType.Straight);
             return LoftSplit(crvs, options);
@@ -295,7 +296,7 @@ namespace Cyborg.RH.NURBS
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return null;
+                return Resources.LoftSplit;
             }
         }
 
