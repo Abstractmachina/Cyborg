@@ -6,15 +6,42 @@ using System.Threading.Tasks;
 
 namespace Cyborg.Core
 {
-    public class Vector2d
+    class Vector3d
     {
+
         public double X { get; set; }
         public double Y { get; set; }
+        public double Z { get; set; }
 
-        public Vector2d(double x, double y)
+
+        public Vector3d() {
+            X = 0;
+            Y = 0;
+            Z = 0;
+        }
+        public Vector3d(double x, double y, double z)
         {
             X = x;
             Y = y;
+            Z = z;
+        }
+
+        public static Vector3d operator +(Vector3d a, Vector3d b)
+        {
+            Vector3d vec = new Vector3d();
+            vec.X = a.X + b.X;
+            vec.Y = a.Y + b.Y;
+            vec.Z = a.Z + b.Z;
+            return vec;
+        }
+
+        public static Vector3d operator -(Vector3d a, Vector3d b)
+        {
+            Vector3d vec = new Vector3d();
+            vec.X = a.X - b.X;
+            vec.Y = a.Y - b.Y;
+            vec.Z = a.Z - b.Z;
+            return vec;
         }
 
         /// <summary>
@@ -22,22 +49,20 @@ namespace Cyborg.Core
         /// </summary>
         public double Length
         {
-            get { return Math.Sqrt(X * X + Y * Y); }
+            get { return Math.Sqrt(X * X + Y * Y + Z * Z); }
         }
 
         /// <summary>
         /// Get unit vector.
         /// </summary>
-        public Vector2d UnitVector
+        public Vector3d UnitVector
         {
-            get { return new Vector2d(X / this.Length, Y / this.Length); }
+            get { return new Vector3d(X / this.Length, Y / this.Length, Z / this.Length); }
         }
 
 
         /*
-         * 
          * METHODS
-         * 
          * */
 
         /// <summary>
@@ -53,6 +78,7 @@ namespace Cyborg.Core
 
                 X *= l;
                 Y *= l;
+                Z *= l;
                 return true;
             }
             return false;
