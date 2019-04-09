@@ -6,31 +6,25 @@ using System.Threading.Tasks;
 
 namespace Cyborg.Core
 {
-    public class Vector2d
+    public class Vec2
     {
         public double X { get; set; }
         public double Y { get; set; }
 
-        public Vector2d(double x, double y)
+        public Vec2(double x, double y)
         {
             X = x;
             Y = y;
         }
 
-        /// <summary>
-        /// Get vector length.
-        /// </summary>
         public double Length
         {
             get { return Math.Sqrt(X * X + Y * Y); }
         }
 
-        /// <summary>
-        /// Get unit vector.
-        /// </summary>
-        public Vector2d UnitVector
+        public Vec2 UnitVector
         {
-            get { return new Vector2d(X / this.Length, Y / this.Length); }
+            get { return new Vec2(X / this.Length, Y / this.Length); }
         }
 
 
