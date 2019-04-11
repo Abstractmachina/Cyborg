@@ -63,9 +63,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RH\ExtendFilletComponent.cs" />
+    <Compile Include="RH\Components\Curves.cs" />
+    <Compile Include="RH\Components\ExtendFilletComponent.cs" />
+    <Compile Include="RH\Surface.cs" />
     <Compile Include="RH\Types.cs" />
-    <Compile Include="RH\LoftSplitComponent.cs" />
+    <Compile Include="RH\Components\LoftSplitComponent.cs" />
     <Compile Include="CyborgInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

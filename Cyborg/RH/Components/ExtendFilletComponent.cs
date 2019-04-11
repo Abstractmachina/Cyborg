@@ -6,7 +6,7 @@ using Cyborg.Properties;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Cyborg.RH
+namespace Cyborg.RH.Components
 {
     public class FilletExtend : GH_Component
     {
@@ -36,7 +36,6 @@ namespace Cyborg.RH
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddCurveParameter("Fillet Output", "C", "Result", GH_ParamAccess.list);
-
         }
 
         /// <summary>
@@ -53,19 +52,11 @@ namespace Cyborg.RH
             if (!DA.GetData(1, ref c2)) return;
             if (!DA.GetData(2, ref radius)) return;
 
-            var result = Fillet(c1, c2, radius);
-            
+            var result = Curves.Fillet(c1, c2, radius);
 
             DA.SetDataList(0, result);
-
-           
-
         }
 
-        public List<Curve> Fillet(Curve c1, Curve c2, double radius)
-        {
-            return Curve.CreateFilletCurves(c1, c1.PointAtEnd, c2, c2.PointAtStart, radius, false, true, true, 0.1, 0.1).ToList();
-        }
 
 
         /// <summary>
