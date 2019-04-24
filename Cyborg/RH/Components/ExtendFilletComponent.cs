@@ -16,7 +16,7 @@ namespace Cyborg.RH.Components
         public FilletExtend()
           : base("Fillet Extend", "Fillet_E",
               "Fillet and extend/trim two curves",
-              "Cyborg", "Curve")
+              Strings.LIB_NAME, Strings.SUB_CURVES)
         {
         }
 

@@ -63,8 +63,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RH\Components\Curves.cs" />
+    <Compile Include="RH\Curves.cs" />
     <Compile Include="RH\Components\ExtendFilletComponent.cs" />
+    <Compile Include="RH\Strings.cs" />
+    <Compile Include="RH\Components\WriteToCSVComponent.cs" />
     <Compile Include="RH\Surface.cs" />
     <Compile Include="RH\Types.cs" />
     <Compile Include="RH\Components\LoftSplitComponent.cs" />
