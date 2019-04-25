@@ -58,11 +58,17 @@
   <ItemGroup>
     <Compile Include="Core\Vec2.cs" />
     <Compile Include="Core\Vec3.cs" />
+    <Compile Include="Mesh\Edge.cs" />
+    <Compile Include="Mesh\Face.cs" />
+    <Compile Include="Mesh\Mesh.cs" />
+    <Compile Include="Mesh\Vertex.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ReactionDiffusion\Cell.cs" />
+    <Compile Include="ReactionDiffusion\ReactionDiffuser.cs" />
     <Compile Include="RH\Curves.cs" />
     <Compile Include="RH\Components\ExtendFilletComponent.cs" />
     <Compile Include="RH\Strings.cs" />
@@ -72,6 +78,7 @@
     <Compile Include="RH\Components\LoftSplitComponent.cs" />
     <Compile Include="CyborgInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Bitmap1.bmp" />
@@ -86,9 +93,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mesh\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
