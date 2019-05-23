@@ -107,7 +107,7 @@ namespace Cyborg.Core
         }
 
         /// <summary>
-        /// Calculate cross product.
+        /// Calculate cross product with other Vec3
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>

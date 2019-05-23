@@ -58,6 +58,9 @@
   <ItemGroup>
     <Compile Include="Core\Vec2.cs" />
     <Compile Include="Core\Vec3.cs" />
+    <Compile Include="DifferentialGrowth\Grid.cs" />
+    <Compile Include="Simulation\Particle.cs" />
+    <Compile Include="DifferentialGrowth\Solver.cs" />
     <Compile Include="Mesh\Edge.cs" />
     <Compile Include="Mesh\Face.cs" />
     <Compile Include="Mesh\Mesh.cs" />
