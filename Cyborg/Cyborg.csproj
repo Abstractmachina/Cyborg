@@ -59,6 +59,8 @@
     <Compile Include="Core\Vec2.cs" />
     <Compile Include="Core\Vec3.cs" />
     <Compile Include="DifferentialGrowth\Grid.cs" />
+    <Compile Include="ParametricSpace\ParamOperations.cs" />
+    <Compile Include="RH\Components\GradientDivideComponent.cs" />
     <Compile Include="Simulation\Particle.cs" />
     <Compile Include="DifferentialGrowth\Solver.cs" />
     <Compile Include="Mesh\Edge.cs" />

@@ -9,9 +9,9 @@ namespace Cyborg.RH
     struct Strings
     {
 
-        public static string LIB_NAME = "Cyborg";
-        public static string SUB_NURBS = "Nurbs";
-        public static string SUB_CURVES = "Curves";
-        public static string SUB_IO = "IO";
+        public static readonly string LIB_NAME = "Cyborg";
+        public static readonly string SUB_NURBS = "Nurbs";
+        public static readonly string SUB_CURVES = "Curves";
+        public static readonly string SUB_IO = "IO";
     }
 }

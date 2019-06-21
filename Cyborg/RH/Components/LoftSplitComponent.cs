@@ -24,7 +24,7 @@ namespace Cyborg.RH.Components
         public LoftSplitComponent()
           : base("Loft Split", "LoftSplit",
               "Loft and split at tangents.",
-              "Cyborg", "NURBS")
+              Strings.LIB_NAME, Strings.SUB_NURBS)
         {
 
         }

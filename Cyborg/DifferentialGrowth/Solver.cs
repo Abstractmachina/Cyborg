@@ -13,6 +13,8 @@ namespace Cyborg.DifferentialGrowth
 {
     class Solver
     {
+
+        /*
         private int counter;
         private Grid grid;
 
@@ -64,7 +66,7 @@ namespace Cyborg.DifferentialGrowth
             foreach (var p0 in pts)
             {
 
-                var accelVec = new Vector3d();
+                var accelVec = new Vec3();
                 int numVecs = 0;
 
                 foreach (var p1 in pts)
@@ -100,4 +102,6 @@ namespace Cyborg.DifferentialGrowth
             }
         }
     }
+
+    */
 }
