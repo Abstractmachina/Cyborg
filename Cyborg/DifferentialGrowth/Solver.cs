@@ -9,7 +9,7 @@ using Cyborg.Core;
 using Cyborg.Simulation;
 
 namespace Cyborg.DifferentialGrowth
-    
+
 {
     class Solver
     {
@@ -104,4 +104,5 @@ namespace Cyborg.DifferentialGrowth
     }
 
     */
+    }
 }

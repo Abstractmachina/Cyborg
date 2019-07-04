@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
+
+using Cyborg.ParametricSpace;
+
 namespace Cyborg.RH.Components
 {
     public class GradientDivideComponent : GH_Component
@@ -50,8 +53,29 @@ namespace Cyborg.RH.Components
         {
 
             var t0 = new List<double>();
+            double distMin = 0;
+            double distMax = 0;
+            double thres = 0;
+            double buffer = 0;
+            double factor = 0;
 
             if (!DA.GetDataList(0, t0)) return;
+            if (!DA.GetData(1, ref distMin)) return;
+            if (!DA.GetData(2, ref distMax)) return;
+            if (!DA.GetData(3, ref thres)) return;
+            if (!DA.GetData(4, ref buffer)) return;
+            if (!DA.GetData(5, ref factor)) return;
+
+            if ( distMin > distMax) AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Minimum distance can't be larger than maximum distance.");
+            if ( factor <= 0) AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Factor must be greater than 0");
+            if ( thres < 0) AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Merge threshold must be greater than or equal to 0");
+            if ( buffer < 0) AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Buffer must be greater than or equal to 0");
+
+
+            var paramOut = ParamOperations.GradientDivide(t0, distMin, distMax, thres, (int) buffer, factor);
+
+
+            DA.SetDataList(0, paramOut);
         }
 
         /// <summary>
