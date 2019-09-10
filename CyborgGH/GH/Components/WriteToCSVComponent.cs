@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Cyborg.RH.Components
+namespace Cyborg.GH.Components
 {
     public class WriteToCSVComponent : GH_Component
     {

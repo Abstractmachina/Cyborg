@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cyborg.RH
+namespace Cyborg.GH
 {
     public struct LoftOptions
     {

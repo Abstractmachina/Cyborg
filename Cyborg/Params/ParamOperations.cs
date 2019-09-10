@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cyborg.ParametricSpace
+namespace Cyborg.Params
 {
-    static class ParamOperations
+    public static class ParamOperations
     {
 
         /// <summary>

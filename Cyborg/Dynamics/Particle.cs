@@ -6,26 +6,16 @@ using System.Threading.Tasks;
 
 using Cyborg.Core;
 
-namespace Cyborg.Simulation
+namespace Cyborg.Dynamics
 {
-    class Particle
+    public class Particle
     {
         private Vec3 loc, vel, accel;
 
-        public Vec3 Loc { get { return loc; } set { loc = value; } }
-        public Vec3 Vel { get { return vel; } set { vel = value; } }
-        public Vec3 Accel { get { return accel; } set { accel = value; } }
+        public Vec3 Pos { get; set; }
+        public Vec3 Vel { get; set; }
+        public Vec3 Accel { get; set; }
 
-
-        private double size;
-        public double Size {
-            get { return size; }
-            set
-            {
-                if (value <= 0) size = 1;
-                else size = value;
-            }
-        }
 
         private double mass;
         public double Mass
@@ -36,6 +26,13 @@ namespace Cyborg.Simulation
                 if (value <= 0) mass = 1;
                 else mass = value;
             }
+        }
+
+        private double size;
+        public double Size
+        {
+            get { return size; }
+            set { if (value <= 0) size = 1; else size = value; }
         }
 
 
@@ -54,17 +51,10 @@ namespace Cyborg.Simulation
             this.loc = loc;
             this.vel = vel;
             this.accel = new Vec3(0, 0, 0);
-        }
-
-        public Particle(Vec3 loc, double size)
-        {
-
-            Loc = loc;
-            Size = size;
             mass = 1;
             size = 1;
-
         }
+
 
         #endregion
 

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyborg", "Cyborg\Cyborg.csproj", "{86EF72F4-1BC3-46C2-8628-D7A2E8D11C13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyborg", "Cyborg\Cyborg.csproj", "{12B5CFEF-2566-460B-BED5-6603EF665308}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyborgGH", "CyborgGH\CyborgGH.csproj", "{86EF72F4-1BC3-46C2-8628-D7A2E8D11C13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12B5CFEF-2566-460B-BED5-6603EF665308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12B5CFEF-2566-460B-BED5-6603EF665308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12B5CFEF-2566-460B-BED5-6603EF665308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12B5CFEF-2566-460B-BED5-6603EF665308}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86EF72F4-1BC3-46C2-8628-D7A2E8D11C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86EF72F4-1BC3-46C2-8628-D7A2E8D11C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86EF72F4-1BC3-46C2-8628-D7A2E8D11C13}.Release|Any CPU.ActiveCfg = Release|Any CPU

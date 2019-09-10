@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 //using Rhino.Geometry;
 using Cyborg.Core;
-using Cyborg.Simulation;
+using Cyborg.Dynamics;
 
 namespace Cyborg.DifferentialGrowth
 

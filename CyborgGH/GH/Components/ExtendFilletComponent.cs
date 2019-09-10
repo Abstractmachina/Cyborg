@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cyborg.Core;
-using Cyborg.Properties;
+
+//using Cyborg.Properties;
+
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Cyborg.RH.Components
+namespace Cyborg.GH.Components
 {
     public class FilletExtend : GH_Component
     {
@@ -68,7 +69,8 @@ namespace Cyborg.RH.Components
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Resources.FilletExtend;
+                //return Resources.FilletExtend;
+                return null;
             }
         }
 

@@ -12,7 +12,7 @@ namespace Cyborg
         {
             get
             {
-                return RH.Strings.LIB_NAME;
+                return GH.Strings.LIB_NAME;
             }
         }
         public override Bitmap Icon

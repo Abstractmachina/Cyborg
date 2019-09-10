@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cyborg.Core
 {
-    class Vec3
+    public class Vec3
     {
         public Vec3()
         {

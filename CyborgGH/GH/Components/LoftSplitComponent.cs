@@ -14,7 +14,7 @@ using Cyborg.Properties;
 // folder in Grasshopper.
 // You can use the _GrasshopperDeveloperSettings Rhino command for that.
 
-namespace Cyborg.RH.Components
+namespace Cyborg.GH.Components
 {
     public class LoftSplitComponent : GH_Component
     {

@@ -5,9 +5,9 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 
 
-using Cyborg.ParametricSpace;
+using Cyborg.Params;
 
-namespace Cyborg.RH.Components
+namespace Cyborg.GH.Components
 {
     public class GradientDivideComponent : GH_Component
     {
