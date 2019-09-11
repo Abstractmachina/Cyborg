@@ -31,6 +31,9 @@ namespace Cyborg.Core
         public double Y { get; set; }
         public double Z { get; set; }
 
+        public static readonly Vec3 Zero = new Vec3();
+
+
         public double Length
         {
             get { return Math.Sqrt(X * X + Y * Y + Z * Z); }

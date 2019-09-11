@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace Cyborg.Dynamics
 {
-    public class Solver
+    public abstract class Solver
     {
 
-        
-
         private int counter;
-
-        //public List<Particle> pts;
-
         private SolverSettings settings;
 
 
@@ -62,8 +57,14 @@ namespace Cyborg.Dynamics
 
         public void Step()
         {
+            UpdateParticles();
             counter++;
         }
+
+        private void UpdateParticles()
+        {
+        }
+
 
         //public void Step(double growthRate)
         //{

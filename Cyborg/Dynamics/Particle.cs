@@ -10,14 +10,14 @@ namespace Cyborg.Dynamics
 {
     public class Particle
     {
-        private Vec3 loc, vel, accel;
+        private Vec3 pos, vel, accel;
+        private double mass;
+        private double size;
 
         public Vec3 Pos { get; set; }
         public Vec3 Vel { get; set; }
         public Vec3 Accel { get; set; }
 
-
-        private double mass;
         public double Mass
         {
             get { return mass; }
@@ -28,7 +28,6 @@ namespace Cyborg.Dynamics
             }
         }
 
-        private double size;
         public double Size
         {
             get { return size; }
@@ -41,14 +40,14 @@ namespace Cyborg.Dynamics
         public Particle() : this(new Vec3(0, 0, 0))
         { }
 
-        public Particle(Vec3 loc) : this(loc, new Vec3(0, 0, 0))
+        public Particle(Vec3 pos) : this(pos, new Vec3(0, 0, 0))
         {
-            this.loc = loc;
+            this.pos = pos;
         }
 
-        public Particle(Vec3 loc, Vec3 vel)
+        public Particle(Vec3 pos, Vec3 vel)
         {
-            this.loc = loc;
+            this.pos = pos;
             this.vel = vel;
             this.accel = new Vec3(0, 0, 0);
             mass = 1;
@@ -58,12 +57,22 @@ namespace Cyborg.Dynamics
 
         #endregion
 
-        public void Move(double speedLimit = 0.01)
+        public void AddDelta(Vec3 delta)
+        {
+            accel += delta;
+        }
+
+        public void Update(double speedLimit = 0.01)
         {
             vel += accel;
             Limit(speedLimit);
-            loc += vel;
-            accel *= 0;
+            pos += vel;
+            Clear();
+        }
+
+        private void Clear()
+        {
+            accel = Vec3.Zero;
         }
 
         private void Limit(double maxSpeed)

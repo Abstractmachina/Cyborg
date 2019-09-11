@@ -4,39 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Cyborg.Dynamics;
-
-namespace Cyborg.DifferentialGrowth
+namespace Cyborg.Dynamics
 {
-    class Grid
+    public class Bin2d<T>
     {
         private int numCellsX;
         private int numCellsY;
         private double cellSize;
-        private Particle[,] cells;
+        private T[,] cells;
 
         /// <summary>
         /// 
         /// </summary>
-        public Grid(int numCellsX, int numCellsY, double cellSize)
+        public Bin2d(int numCellsX, int numCellsY, double cellSize)
         {
             this.numCellsX = numCellsX;
             this.numCellsY = numCellsY;
             this.cellSize = cellSize;
 
-            initGrid();
+            InitGrid();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void initGrid()
+        private void InitGrid()
         {
             for (int x = 0; x < numCellsX; x++)
             {
                 for (int y = 0; y < numCellsY; y++)
                 {
-                    cells[x, y] = null;
+                    cells[x, y] = default(T);
                 }
             }
         }

@@ -42,8 +42,13 @@
   <ItemGroup>
     <Compile Include="Core\Vec2.cs" />
     <Compile Include="Core\Vec3.cs" />
-    <Compile Include="DifferentialGrowth\Grid.cs" />
-    <Compile Include="DifferentialGrowth\Solver.cs" />
+    <Compile Include="Dynamics\Constraints\Constraint.cs" />
+    <Compile Include="Dynamics\Bin2d.cs" />
+    <Compile Include="Dynamics\Constraints\Length.cs" />
+    <Compile Include="Dynamics\Forces\Force.cs" />
+    <Compile Include="Dynamics\Forces\Linear.cs" />
+    <Compile Include="Dynamics\Interfaces\IConstraint.cs" />
+    <Compile Include="Dynamics\Octree.cs" />
     <Compile Include="Dynamics\Particle.cs" />
     <Compile Include="Dynamics\Solver.cs" />
     <Compile Include="Dynamics\SolverSettings.cs" />
@@ -54,10 +59,12 @@
     <Compile Include="Mesh\Vertex.cs" />
     <Compile Include="Params\ParamOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReactionDiffusion\Cell.cs" />
-    <Compile Include="ReactionDiffusion\ReactionDiffuser.cs" />
+    <Compile Include="Dynamics\ReactionDiffusion\Cell.cs" />
+    <Compile Include="Dynamics\ReactionDiffusion\ReactionDiffuser.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Dynamics\DifferentialGrowth\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
