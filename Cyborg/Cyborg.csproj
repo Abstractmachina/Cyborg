@@ -58,6 +58,7 @@
     <Compile Include="Mesh\Mesh.cs" />
     <Compile Include="Mesh\Vertex.cs" />
     <Compile Include="Params\ParamOperations.cs" />
+    <Compile Include="Params\SetOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dynamics\ReactionDiffusion\Cell.cs" />
     <Compile Include="Dynamics\ReactionDiffusion\ReactionDiffuser.cs" />
