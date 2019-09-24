@@ -9,11 +9,9 @@ namespace Cyborg.Params
     public static class SetOperations
     {
 
-        public static List<List<T>> BuildDiagrid <T> (T[][] inputMatrix, bool flip)
+        public static bool BuildDiagrid <T> (T[][] inputMatrix, bool flip, out List<List<T>>diagrid)
         {
             var groups = new List<List<T>>();
-
-            int ind = 0;
 
             int count0 = inputMatrix.GetLength(0);
             int count1 = inputMatrix.GetLength(1);
@@ -21,7 +19,10 @@ namespace Cyborg.Params
             //test for same length 
             for (int i = 0; i < count0; i++)
             {
-                if (inputMatrix[i].Length != count1) throw new ArgumentException("Unequal Length");
+                if (inputMatrix[i].Length != count1) 
+                {
+                    diagrid = new List<List<T>>();
+                    return false; }
             }
 
 
@@ -133,7 +134,6 @@ namespace Cyborg.Params
 
             }
 
-
             //quarter panels
             var quarterGroup = new List<T>();
             quarterGroup.Add(inputMatrix[0][0]);
@@ -176,10 +176,8 @@ namespace Cyborg.Params
                 groups.Add(group);
             }
 
-
-
-
-            return groups;
+            diagrid =  groups;
+            return true;
         }
 
     }

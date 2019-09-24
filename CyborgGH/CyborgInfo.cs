@@ -2,7 +2,7 @@
 using System.Drawing;
 using Grasshopper.Kernel;
 using System.IO;
-using Cyborg.Properties;
+using Cyborg.CyborgGH.Properties;
 
 namespace Cyborg
 {

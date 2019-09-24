@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cyborg.GH
 {
-    public static class Curves
+    public static class Curve
     {
 
 
@@ -18,9 +18,9 @@ namespace Cyborg.GH
         /// <param name="c2"></param>
         /// <param name="radius"></param>
         /// <returns></returns>
-        public static List<Curve> Fillet(Curve c1, Curve c2, double radius)
+        public static List<Rhino.Geometry.Curve> Fillet(Rhino.Geometry.Curve c1, Rhino.Geometry.Curve c2, double radius)
         {
-            return Curve.CreateFilletCurves(c1, c1.PointAtEnd, c2, c2.PointAtStart, radius, false, true, true, 0.1, 0.1).ToList();
+            return Rhino.Geometry.Curve.CreateFilletCurves(c1, c1.PointAtEnd, c2, c2.PointAtStart, radius, false, true, true, 0.1, 0.1).ToList();
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Cyborg.GH
         /// <param name="crv">Curve to explode</param>
         /// <param name="recursive"></param>
         /// <returns></returns>
-        public static bool ExplodeCurveSegments(ref List<Curve> L, Curve crv, bool recursive)
+        public static bool ExplodeCurveSegments(ref List<Rhino.Geometry.Curve> L, Rhino.Geometry.Curve crv, bool recursive)
         {
             if (crv == null) { return false; }
 
@@ -39,23 +39,23 @@ namespace Cyborg.GH
             {
                 if (recursive) { polycurve.RemoveNesting(); }
 
-                Curve[] segments = polycurve.Explode();
+                Rhino.Geometry.Curve[] segments = polycurve.Explode();
 
                 if (segments == null) { return false; }
                 if (segments.Length == 0) { return false; }
 
                 if (recursive)
                 {
-                    foreach (Curve S in segments)
+                    foreach (Rhino.Geometry.Curve S in segments)
                     {
                         ExplodeCurveSegments(ref L, S, recursive);
                     }
                 }
                 else
                 {
-                    foreach (Curve S in segments)
+                    foreach (Rhino.Geometry.Curve S in segments)
                     {
-                        L.Add(S.DuplicateShallow() as Curve);
+                        L.Add(S.DuplicateShallow() as Rhino.Geometry.Curve);
                     }
                 }
 
@@ -133,7 +133,7 @@ namespace Cyborg.GH
                     continue;
                 }
 
-                Curve M = nurbs.DuplicateCurve();
+                Rhino.Geometry.Curve M = nurbs.DuplicateCurve();
                 M = M.Trim(trim);
                 if (M.IsValid) { L.Add(M); }
 

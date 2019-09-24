@@ -7,7 +7,7 @@ using Rhino.Geometry;
 using System.Linq;
 using GH_IO.Serialization;
 using System.Windows.Forms;
-using Cyborg.Properties;
+using Cyborg.CyborgGH.Properties;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -63,7 +63,7 @@ namespace Cyborg.GH.Components
         /// </summary>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            var sections = new List<Curve>();
+            var sections = new List<Rhino.Geometry.Curve>();
             if (!DA.GetDataList("Curves", sections)) return;
 
             if (sections.Count < 2)

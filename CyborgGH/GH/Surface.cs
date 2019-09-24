@@ -18,7 +18,7 @@ namespace Cyborg.GH
         /// <param name="crvs">Input Curves</param>
         /// <param name="outBreps">Loft Output as Breps</param>
         /// <returns></returns>
-        public static bool LoftSplit(List<Curve> crvs, ref List<Brep> outBreps)
+        public static bool LoftSplit(List<Rhino.Geometry.Curve> crvs, ref List<Brep> outBreps)
         {
             LoftOptions options = new LoftOptions(false, false, 0, 0, (int)LoftType.Straight);
             return LoftSplit(crvs, options, ref outBreps);
@@ -31,16 +31,16 @@ namespace Cyborg.GH
         /// <param name="options">Additional Options</param>
         /// <param name="outBreps">Loft Output as Breps</param>
         /// <returns></returns>
-        public static bool LoftSplit(List<Curve> inCrvs, LoftOptions options, ref List<Brep> outBreps)
+        public static bool LoftSplit(List<Rhino.Geometry.Curve> inCrvs, LoftOptions options, ref List<Brep> outBreps)
         {
 
-            var exCrvs = new List<List<Curve>>();
+            var exCrvs = new List<List<Rhino.Geometry.Curve>>();
 
             //explode crv
             foreach (var c in inCrvs)
             {
-                var L = new List<Curve>();
-                if (!Curves.ExplodeCurveSegments(ref L, c, true)) return false;
+                var L = new List<Rhino.Geometry.Curve>();
+                if (!Curve.ExplodeCurveSegments(ref L, c, true)) return false;
                 else exCrvs.Add(L);
             }
 
@@ -51,7 +51,7 @@ namespace Cyborg.GH
 
             for (int i = 0; i < numberOfLofts; i++)
             {
-                Curve[] cr = new Curve[exCrvs.Count];
+                Rhino.Geometry.Curve[] cr = new Rhino.Geometry.Curve[exCrvs.Count];
                 for (int j = 0; j < cr.Length; j++)
                 {
                     cr[j] = exCrvs[j][i];

@@ -17,7 +17,7 @@ namespace Cyborg.GH.Components
         public FilletExtend()
           : base("Fillet Extend", "Fillet_E",
               "Fillet and extend/trim two curves",
-              Strings.LIB_NAME, Strings.SUB_CURVES)
+              Strings.LIB_NAME, Strings.SUB_CURVE)
         {
         }
 
@@ -45,15 +45,15 @@ namespace Cyborg.GH.Components
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Curve c1 = null;
-            Curve c2 = null;
+            Rhino.Geometry.Curve c1 = null;
+            Rhino.Geometry.Curve c2 = null;
             double radius = 0;
 
             if (!DA.GetData(0, ref c1)) return;
             if (!DA.GetData(1, ref c2)) return;
             if (!DA.GetData(2, ref radius)) return;
 
-            var result = Curves.Fillet(c1, c2, radius);
+            var result = Curve.Fillet(c1, c2, radius);
 
             DA.SetDataList(0, result);
         }
