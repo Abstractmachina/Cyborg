@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cyborg.Dynamics.Interfaces;
 
 namespace Cyborg.Dynamics
 {
@@ -61,8 +62,19 @@ namespace Cyborg.Dynamics
             counter++;
         }
 
-        private void UpdateParticles()
+        private void ApplyConstraints(List<Particle> particles, List<IConstraint> constraints)
         {
+            foreach 
+        }
+
+        private void UpdateParticles(List<Particle> particles)
+        {
+
+            foreach (var p in particles)
+            {
+                p.Update();
+            }
+
         }
 
 

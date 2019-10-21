@@ -55,21 +55,21 @@ namespace Cyborg.GH.Components
             //convert gh tree to [][] dddd
             var processMatrix = inputMatrix.Branches.ToList();
             var processMatrix2 = new IGH_Goo[processMatrix.Count][];
-            for (int i =0; i < processMatrix.Count; i++) processMatrix2[i] = processMatrix[i].ToArray();
+            for (int i = 0; i < processMatrix.Count; i++) processMatrix2[i] = processMatrix[i].ToArray();
 
             //build diagrid
             var diagrid = new List<List<IGH_Goo>>();
             if (!SetOperations.BuildDiagrid<IGH_Goo>(processMatrix2, false, out diagrid)) AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Operation failed. Make sure the matrix is uniform.");
 
-            //convert list<list<T>> to gh tree
-            var outDiagrid = new GH_Structure<IGH_Goo>();
-            for (int i =0; i < diagrid.Count; i++)
-            {
-                var pth = new GH_Path(i);
-                outDiagrid.AppendRange(diagrid[i], pth);
-            }
+            ////convert list<list<T>> to gh tree
+            //var outDiagrid = new GH_Structure<IGH_Goo>();
+            //for (int i = 0; i < diagrid.Count; i++)
+            //{
+            //    var pth = new GH_Path(i);
+            //    outDiagrid.AppendRange(diagrid[i], pth);
+            //}
 
-            DA.SetDataTree(0, outDiagrid);
+            //DA.SetDataTree(0, outDiagrid);
 
         }
 
