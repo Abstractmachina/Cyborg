@@ -24,9 +24,7 @@ namespace Cyborg.Dynamics.Forces
         
         public void Calculate(List<Particle> particles)
         {
-
-            //particles[i0].AddDelta(delta);
-
+            delta = delta * Strength;
         }
 
         public void Apply(List<Particle> particles)

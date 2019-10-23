@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cyborg.Dynamics.Interfaces
 {
-    interface IConstraint
+    public interface IConstraint
     {
 
         IEnumerable<int> Indices { get; set; }

@@ -26,26 +26,24 @@ namespace Cyborg.Dynamics.Forces
 
         }
 
-
-
         public void Calculate(List<Particle> particles)
         {
 
             var p0 = particles[i0];
             var p1 = particles[i1];
 
-            Vec3 vec = p1.Pos - p0.Pos;
-            double deltaLength = vec.Length;
+            Vec3 vec = p1.Pos - p0.Pos; //vector between particles
+            double deltaLength = vec.Length - targetLength;
 
             //f = -k * deltaX
-
-
+            delta = vec.Unit * ((-1 * Strength * deltaLength) / 2 );
 
 
         }
         public void Apply(List<Particle> particles)
         {
-
+            particles[i0].AddDelta(delta);
+            particles[i1].AddDelta(delta);
         }
 
 

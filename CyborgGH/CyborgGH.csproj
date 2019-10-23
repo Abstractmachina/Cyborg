@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="GH\Components\DiagridComponent.cs" />
     <Compile Include="GH\Components\GradientDivideComponent.cs" />
+    <Compile Include="GH\Conversions.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -14,9 +14,9 @@ namespace Cyborg.Dynamics
         private double mass;
         private double size;
 
-        public Vec3 Pos { get; set; }
-        public Vec3 Vel { get; set; }
-        public Vec3 Accel { get; set; }
+        public Vec3 Pos { get { return pos; } set { pos = value; } }
+        public Vec3 Vel { get { return vel; } set { vel = value; } }
+        public Vec3 Accel { get { return accel; } set { accel = value; } }
 
         public double Mass
         {

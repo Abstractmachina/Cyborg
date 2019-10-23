@@ -45,7 +45,7 @@
     <Compile Include="Core\Vec3.cs" />
     <Compile Include="Dynamics\Constraints\Constraint.cs" />
     <Compile Include="Dynamics\Bin2d.cs" />
-    <Compile Include="Dynamics\Forces\Length.cs" />
+    <Compile Include="Dynamics\Forces\Spring.cs" />
     <Compile Include="Dynamics\Forces\Force.cs" />
     <Compile Include="Dynamics\Forces\Linear.cs" />
     <Compile Include="Dynamics\Interfaces\IConstraint.cs" />

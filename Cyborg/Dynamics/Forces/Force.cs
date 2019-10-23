@@ -8,7 +8,6 @@ namespace Cyborg.Dynamics.Forces
 {
     public abstract class Force
     {
-
         private double strength;
         public double Strength
         {

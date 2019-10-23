@@ -8,7 +8,7 @@ using Cyborg.Dynamics.Interfaces;
 
 namespace Cyborg.Dynamics
 {
-    public abstract class Solver
+    public class Solver
     {
 
         private int counter;
@@ -56,15 +56,24 @@ namespace Cyborg.Dynamics
         //}
         #endregion
 
-        public void Step()
+        public void Step(List<Particle> particles, List<IConstraint> constraints)
         {
-            UpdateParticles();
+            ApplyConstraints(particles, constraints);
+            UpdateParticles(particles);
             counter++;
         }
 
         private void ApplyConstraints(List<Particle> particles, List<IConstraint> constraints)
         {
-            foreach 
+            foreach( var c in constraints)
+            {
+                c.Calculate(particles);
+            }
+
+            foreach (var c in constraints)
+            {
+                c.Apply(particles);
+            }
         }
 
         private void UpdateParticles(List<Particle> particles)
