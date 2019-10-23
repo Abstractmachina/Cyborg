@@ -22,17 +22,18 @@ namespace Cyborg.Core
             Z = z;
         }
 
-        /*
-         * 
-         * PROPERTIES
-         * 
-         * */
+
+        #region PROPERTIES
 
         public double X { get; set; }
         public double Y { get; set; }
         public double Z { get; set; }
 
         public static readonly Vec3 Zero = new Vec3();
+        public static readonly Vec3 XAxis = new Vec3(1, 0, 0);
+        public static readonly Vec3 YAxis = new Vec3(0, 1, 0);
+        public static readonly Vec3 ZAxis = new Vec3(0, 0, 1);
+
 
 
         public double Length
@@ -44,7 +45,7 @@ namespace Cyborg.Core
         {
             get { return new Vec3(X / this.Length, Y / this.Length, Z / this.Length); }
         }
-
+        #endregion
 
 
         #region OPERATORS
@@ -113,14 +114,22 @@ namespace Cyborg.Core
             return Math.Acos(    (a*b) / (a.Length * b.Length)   );
         }
 
-        #endregion
-
-
         /// <summary>
-        ///Scale vector to its unit length.
+        /// Projection vector of b on a.
         /// </summary>
-        /// <returns>True on success</returns>
-        public bool Unitize()
+        public static Vec3 Projection(Vec3 a, Vec3 b)
+        {
+            return ((a * b) / a.Length) * a.Unit;
+        }
+
+            #endregion
+
+
+            /// <summary>
+            ///Scale vector to its unit length.
+            /// </summary>
+            /// <returns>True on success</returns>
+            public bool Unitize()
         {
             var l = this.Length;
             if (l > 0d)
@@ -151,6 +160,15 @@ namespace Cyborg.Core
         public double DistanceTo(Vec3 other)
         {
             return (other - this).Length;
+        }
+
+        /// <summary>
+        /// Get projection vector of b on a.
+        /// </summary>
+        public Vec3 Projection(Vec3 other)
+        {
+            return ((this * other) / this.Length) * this.Unit;
+
         }
 
         

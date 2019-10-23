@@ -10,28 +10,29 @@ namespace Cyborg.Dynamics
 {
     public class Particle
     {
-        private Vec3 pos, vel, accel;
-        private double mass;
-        private double size;
+        private Vec3 _pos, _vel, _accel;
+        private double _mass;
+        private double _size;
+        private bool _isLocked = false;
 
-        public Vec3 Pos { get { return pos; } set { pos = value; } }
-        public Vec3 Vel { get { return vel; } set { vel = value; } }
-        public Vec3 Accel { get { return accel; } set { accel = value; } }
+        public Vec3 Pos { get { return _pos; } set { _pos = value; } }
+        public Vec3 Vel { get { return _vel; } set { _vel = value; } }
+        public Vec3 Accel { get { return _accel; } set { _accel = value; } }
 
         public double Mass
         {
-            get { return mass; }
+            get { return _mass; }
             set
             {
-                if (value <= 0) mass = 1;
-                else mass = value;
+                if (value <= 0) _mass = 1;
+                else _mass = value;
             }
         }
 
         public double Size
         {
-            get { return size; }
-            set { if (value <= 0) size = 1; else size = value; }
+            get { return _size; }
+            set { if (value <= 0) _size = 1; else _size = value; }
         }
 
 
@@ -42,16 +43,22 @@ namespace Cyborg.Dynamics
 
         public Particle(Vec3 pos) : this(pos, new Vec3(0, 0, 0))
         {
-            this.pos = pos;
+            Pos = pos;
         }
 
-        public Particle(Vec3 pos, Vec3 vel)
+        public Particle(Vec3 pos, Vec3 vel) : this(pos, vel, new Vec3(0, 0, 0))
         {
-            this.pos = pos;
-            this.vel = vel;
-            this.accel = new Vec3(0, 0, 0);
-            mass = 1;
-            size = 1;
+            Pos = pos;
+            Vel = vel;
+        }
+
+        public Particle(Vec3 pos, Vec3 vel, Vec3 accel)
+        {
+            Pos = pos;
+            Vel = vel;
+            Accel = accel;
+            _mass = 1;
+            _size = 1;
         }
 
 
@@ -59,28 +66,30 @@ namespace Cyborg.Dynamics
 
         public void AddDelta(Vec3 delta)
         {
-            accel += delta;
+            _accel += delta;
         }
 
-        public void Update(double speedLimit = 0.01)
+        public void Update(double speedLimit, double damping)
         {
-            vel += accel;
+            var dampingForce = _vel * (1.0 - damping);
+
+            _vel += _accel - dampingForce;
             Limit(speedLimit);
-            pos += vel;
+            _pos += _vel;
             Clear();
         }
 
         private void Clear()
         {
-            accel = Vec3.Zero;
+            _accel = Vec3.Zero;
         }
 
         private void Limit(double maxSpeed)
         {
-            if (vel.Length > maxSpeed)
+            if (_vel.Length > maxSpeed)
             {
-                vel.Unitize();
-                vel *= maxSpeed;
+                _vel.Unitize();
+                _vel *= maxSpeed;
             }
         }
     }

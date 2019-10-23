@@ -11,12 +11,16 @@ namespace Cyborg.Dynamics
     public class Solver
     {
 
-        private int counter;
-        private SolverSettings settings;
+        //TODO convergence check
+        //TODO damping
+        //TODO timestep
+
+        private int _stepCounter;
+        private SolverSettings _settings;
 
 
-        public int Counter { get; set; }
-        public SolverSettings Settings { get; set; }
+        public int StepCounter { get { return _stepCounter; } }
+        public SolverSettings Settings { get { return _settings; } set { _settings = value; } }
 
 
         #region CONSTRUCTORS
@@ -25,42 +29,17 @@ namespace Cyborg.Dynamics
 
         public Solver(SolverSettings settings)
         {
-            this.settings = settings;
-            counter = 0;
+            Settings = settings;
+            _stepCounter = 0;
         }
 
-        //public Solver(List<Vec3> initPos, double size)
-        //{
-        //    pts = new List<Particle>();
-        //    //pts = initPos.Select(p => new Particle(p)).ToList();
-        //    foreach (var v in initPos)
-        //    {
-        //        var p = new Particle(v, size / 2 * 0.9);
-        //        pts.Add(p);
-        //    }
-
-
-        //    //get dimensions for grid
-        //    this.world = world;
-        //    double xMax = world.Max.X;
-        //    double yMax = world.Max.Y;
-        //    double cellsize = size * 2;
-
-        //    int xNum = (int)xMax / (int)cellsize;
-        //    int yNum = (int)yMax / (int)cellsize;
-        //    grid = new Grid(xNum, yNum, cellsize);
-
-
-        //    counter = 0;
-
-        //}
         #endregion
 
         public void Step(List<Particle> particles, List<IConstraint> constraints)
         {
             ApplyConstraints(particles, constraints);
             UpdateParticles(particles);
-            counter++;
+            _stepCounter++;
         }
 
         private void ApplyConstraints(List<Particle> particles, List<IConstraint> constraints)
@@ -81,7 +60,7 @@ namespace Cyborg.Dynamics
 
             foreach (var p in particles)
             {
-                p.Update();
+                p.Update(_settings.MaxSpeed, _settings.LinearDamping);
             }
 
         }

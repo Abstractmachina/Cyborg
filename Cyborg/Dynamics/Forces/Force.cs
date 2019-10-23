@@ -14,7 +14,7 @@ namespace Cyborg.Dynamics.Forces
             get { return strength; }
             set
             {
-                if (value <= 0) strength = 1.0;
+                if (value <= 0) throw new ArgumentOutOfRangeException("Value must be > 0");
                 else strength = value;
             }
         }

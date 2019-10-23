@@ -10,57 +10,56 @@ namespace Cyborg.Dynamics.Forces
 {
     public class Spring : Force, IConstraint
     {
-        private Vec3 delta;
-        private double targetLength;
-        private int i0, i1;
+        private Vec3 _delta;
+        private double _targetLength;
+        private int _i0, _i1;
         
 
 
         public Spring(int i0, int i1, double targetLength, double springConstant)
         {
 
-            this.i0 = i0;
-            this.i1 = i1;
-            this.targetLength = targetLength;
-            this.Strength = springConstant;
+            _i0 = i0;
+            _i1 = i1;
+            _targetLength = targetLength;
+            Strength = springConstant;
 
         }
 
         public void Calculate(List<Particle> particles)
         {
 
-            var p0 = particles[i0];
-            var p1 = particles[i1];
+            var p0 = particles[_i0];
+            var p1 = particles[_i1];
 
             Vec3 vec = p1.Pos - p0.Pos; //vector between particles
-            double deltaLength = vec.Length - targetLength;
+            double deltaLength = vec.Length - _targetLength;
 
             //f = -k * deltaX
-            delta = vec.Unit * ((-1 * Strength * deltaLength) / 2 );
-
+            _delta =  ((1 * Strength * deltaLength)/2) * vec.Unit;
 
         }
         public void Apply(List<Particle> particles)
         {
-            particles[i0].AddDelta(delta);
-            particles[i1].AddDelta(delta);
+            particles[_i0].AddDelta(_delta);
+            particles[_i1].AddDelta(_delta * -1 );
         }
 
 
         public IEnumerable<int> Indices {
             get
             {
-                yield return i0;
-                yield return i1;
+                yield return _i0;
+                yield return _i1;
             }
             set
             {
                 var it = value.GetEnumerator();
                 it.MoveNext();
-                i0 = it.Current;
+                _i0 = it.Current;
 
                 it.MoveNext();
-                i1 = it.Current;
+                _i1 = it.Current;
             }
             }
 

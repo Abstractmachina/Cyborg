@@ -41,10 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Plane.cs" />
     <Compile Include="Core\Vec2.cs" />
     <Compile Include="Core\Vec3.cs" />
     <Compile Include="Dynamics\Constraints\Constraint.cs" />
     <Compile Include="Dynamics\Bin2d.cs" />
+    <Compile Include="Dynamics\Forces\Collision.cs" />
     <Compile Include="Dynamics\Forces\Spring.cs" />
     <Compile Include="Dynamics\Forces\Force.cs" />
     <Compile Include="Dynamics\Forces\Linear.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dynamics\ReactionDiffusion\Cell.cs" />
     <Compile Include="Dynamics\ReactionDiffusion\ReactionDiffuser.cs" />
+    <Compile Include="SandBox.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>

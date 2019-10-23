@@ -9,14 +9,14 @@ namespace Cyborg.Dynamics.Constraints
     public abstract class Constraint
     {
 
-        private double weight;
+        private double _weight;
         public double Weight
         {
-            get { return weight; }
+            get { return _weight; }
             set
             {
-                if (value < 0) weight = 1;
-                else weight = value;
+                if (value < 0) _weight = 1;
+                else _weight = value;
             }
         }
 

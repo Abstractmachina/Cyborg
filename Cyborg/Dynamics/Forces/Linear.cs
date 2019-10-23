@@ -10,40 +10,40 @@ namespace Cyborg.Dynamics.Forces
 {
     public class Linear: Force, IConstraint
     {
-        private Vec3 delta;
-        private int i0;
+        private Vec3 _delta;
+        private int _i0;
 
         public Linear() { }
         public Linear(int index, Vec3 delta, double strength = 1.0)
         {
-            i0 = index;
-            this.delta = delta;
+            _i0 = index;
+            this._delta = delta;
             Strength = strength;
         }
         
         
         public void Calculate(List<Particle> particles)
         {
-            delta = delta * Strength;
+            _delta = _delta * Strength;
         }
 
         public void Apply(List<Particle> particles)
         {
-            particles[i0].AddDelta(delta);
+            particles[_i0].AddDelta(_delta);
 
         }
 
         public IEnumerable<int> Indices {
             get
             {
-                yield return i0;
+                yield return _i0;
             }
             set
             {
                 var itr = value.GetEnumerator();
 
                 itr.MoveNext();
-                i0 = itr.Current;
+                _i0 = itr.Current;
             }
         }
     }
