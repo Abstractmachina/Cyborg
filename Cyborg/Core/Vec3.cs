@@ -79,6 +79,15 @@ namespace Cyborg.Core
         {
             return a.X * b.X + a.Y * b.Y + a.Z * b.Z;
         }
+
+        public static Vec3 operator /(Vec3 v, double scalar)
+        {
+            scalar = 1.0 / scalar;
+            v.X *= scalar;
+            v.Y *= scalar;
+            v.Z *= scalar;
+            return v;
+        }
         #endregion
 
 
@@ -111,7 +120,7 @@ namespace Cyborg.Core
 
         public static double Angle(Vec3 a, Vec3 b)
         {
-            return Math.Acos(    (a*b) / (a.Length * b.Length)   );
+            return Math.Acos((a * b) / (a.Length * b.Length));
         }
 
         /// <summary>
@@ -122,14 +131,14 @@ namespace Cyborg.Core
             return ((a * b) / a.Length) * a.Unit;
         }
 
-            #endregion
+        #endregion
 
 
-            /// <summary>
-            ///Scale vector to its unit length.
-            /// </summary>
-            /// <returns>True on success</returns>
-            public bool Unitize()
+        /// <summary>
+        ///Scale vector to its unit length.
+        /// </summary>
+        /// <returns>True on success</returns>
+        public bool Unitize()
         {
             var l = this.Length;
             if (l > 0d)
@@ -171,6 +180,6 @@ namespace Cyborg.Core
 
         }
 
-        
+
     }
 }

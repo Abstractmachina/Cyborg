@@ -13,8 +13,16 @@ namespace Cyborg.Dynamics.Forces
         private Vec3 _delta;
         private double _targetLength;
         private int _i0, _i1;
-        
 
+        public double TargetLength
+        {
+            get { return _targetLength; }
+            set
+            {
+                if (value <= 0) throw new ArgumentOutOfRangeException("Value must be >0");
+                else _targetLength = value;
+            }
+        }
 
         public Spring(int i0, int i1, double targetLength, double springConstant)
         {
@@ -36,17 +44,18 @@ namespace Cyborg.Dynamics.Forces
             double deltaLength = vec.Length - _targetLength;
 
             //f = -k * deltaX
-            _delta =  ((1 * Strength * deltaLength)/2) * vec.Unit;
+            _delta = ((1 * Strength * deltaLength) / 2) * vec.Unit;
 
         }
         public void Apply(List<Particle> particles)
         {
             particles[_i0].AddDelta(_delta);
-            particles[_i1].AddDelta(_delta * -1 );
+            particles[_i1].AddDelta(_delta * -1);
         }
 
 
-        public IEnumerable<int> Indices {
+        public IEnumerable<int> Indices
+        {
             get
             {
                 yield return _i0;
@@ -61,7 +70,7 @@ namespace Cyborg.Dynamics.Forces
                 it.MoveNext();
                 _i1 = it.Current;
             }
-            }
+        }
 
     }
 }

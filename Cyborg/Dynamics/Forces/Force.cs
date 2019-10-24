@@ -8,14 +8,14 @@ namespace Cyborg.Dynamics.Forces
 {
     public abstract class Force
     {
-        private double strength;
+        private double _strength;
         public double Strength
         {
-            get { return strength; }
+            get { return _strength; }
             set
             {
                 if (value <= 0) throw new ArgumentOutOfRangeException("Value must be > 0");
-                else strength = value;
+                else _strength = value;
             }
         }
 

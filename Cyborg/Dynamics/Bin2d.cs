@@ -8,19 +8,19 @@ namespace Cyborg.Dynamics
 {
     public class Bin2d<T>
     {
-        private int numCellsX;
-        private int numCellsY;
-        private double cellSize;
-        private T[,] cells;
+        private int _numCellsX;
+        private int _numCellsY;
+        private double _cellSize;
+        private T[,] _cells;
 
         /// <summary>
         /// 
         /// </summary>
         public Bin2d(int numCellsX, int numCellsY, double cellSize)
         {
-            this.numCellsX = numCellsX;
-            this.numCellsY = numCellsY;
-            this.cellSize = cellSize;
+            this._numCellsX = numCellsX;
+            this._numCellsY = numCellsY;
+            this._cellSize = cellSize;
 
             InitGrid();
         }
@@ -30,11 +30,11 @@ namespace Cyborg.Dynamics
         /// </summary>
         private void InitGrid()
         {
-            for (int x = 0; x < numCellsX; x++)
+            for (int x = 0; x < _numCellsX; x++)
             {
-                for (int y = 0; y < numCellsY; y++)
+                for (int y = 0; y < _numCellsY; y++)
                 {
-                    cells[x, y] = default(T);
+                    _cells[x, y] = default(T);
                 }
             }
         }

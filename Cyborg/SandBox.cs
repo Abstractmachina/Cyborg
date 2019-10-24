@@ -62,7 +62,7 @@ namespace Cyborg
                     {
                         var v = current.Pos - p.Pos;
                         var dist = v.Length;
-                        if (dist <= current.Size + p.Size)
+                        if (dist <= current.Radius + p.Radius)
                         {
                             debug = "hit!";
                             Vec3 normal = v;

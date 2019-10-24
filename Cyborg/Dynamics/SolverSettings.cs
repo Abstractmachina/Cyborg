@@ -15,7 +15,7 @@ namespace Cyborg.Dynamics
             get { return _linearDamping; }
             set
             {
-                if (value < 0 || value > 0.1) throw new ArgumentOutOfRangeException("Value must be between 0 and 0.1");
+                if (value < 0 || value > 1) throw new ArgumentOutOfRangeException("Value must be between 0 and 1");
                 else _linearDamping = value;
             }
         }
