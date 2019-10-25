@@ -58,15 +58,14 @@ namespace Cyborg.Dynamics.Forces
                     if (dist <= current.Radius + p.Radius)
                     {
                         collisionCount++;
-                        current.Pos = p.Pos + v * -1; //make sure there are no negative values for dis
+                        current.Pos = p.Pos + v * -1; //make sure there are no negative values for dist
 
                         deltaSum += -1 * v.Unit * Strength;
 
                     }
                 }
             }
-            if (collisionCount != 0)
-                _delta = deltaSum * (1 / collisionCount);
+            if (collisionCount != 0) _delta = deltaSum / collisionCount;
         }
 
         public void Apply(List<Particle> particles)
@@ -89,4 +88,5 @@ namespace Cyborg.Dynamics.Forces
             }
         }
     }
+}
 
