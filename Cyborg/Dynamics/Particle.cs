@@ -42,26 +42,26 @@ namespace Cyborg.Dynamics
 
 
 
-        public Particle() : this(new Vec3(0, 0, 0))
+        public Particle(int i0) : this(i0, Vec3.Zero)
         { }
 
-        public Particle(Vec3 pos) : this(pos, new Vec3(0, 0, 0))
+        public Particle(int i0, Vec3 pos) : this(i0, pos, Vec3.Zero)
         {
             Pos = pos;
         }
 
-        public Particle(Vec3 pos, Vec3 vel) : this(pos, vel, new Vec3(0, 0, 0))
+        public Particle(int i0, Vec3 pos, Vec3 vel) : this(i0, pos, vel, Vec3.Zero)
         {
             Pos = pos;
             Vel = vel;
         }
 
-        public Particle(Vec3 pos, double size) : this(pos, Vec3.Zero, Vec3.Zero, size)
+        public Particle(int i0, Vec3 pos, double size) : this(i0, pos, Vec3.Zero, Vec3.Zero, size)
         {
             Pos = pos;
             Radius = size;
         }
-        public Particle(Vec3 pos, Vec3 vel, Vec3 accel): this(pos, vel, accel, 1.0d)
+        public Particle(int i0, Vec3 pos, Vec3 vel, Vec3 accel): this(i0, pos, vel, accel, 1.0d)
         {
             Pos = pos;
             Vel = vel;
@@ -69,13 +69,15 @@ namespace Cyborg.Dynamics
             _mass = 1;
             _radius = 1;
         }
-        public Particle(Vec3 pos, Vec3 vel, Vec3 accel, double size)
+        public Particle(int i0, Vec3 pos, Vec3 vel, Vec3 accel, double size)
         {
+            
             Pos = pos;
             Vel = vel;
             Accel = accel;
             _mass = 1;
             _radius = size;
+            _index = i0;
         }
 
 

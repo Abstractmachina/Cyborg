@@ -58,7 +58,7 @@ namespace Cyborg.Dynamics.Forces
                     if (dist <= current.Radius + p.Radius)
                     {
                         collisionCount++;
-                        current.Pos = p.Pos + v * -1; //make sure there are no negative values for dist
+                        //current.Pos = p.Pos + v * -1; //make sure there are no negative values for dist
 
                         deltaSum += -1 * v.Unit * Strength;
 

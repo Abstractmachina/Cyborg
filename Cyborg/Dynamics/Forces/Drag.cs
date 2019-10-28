@@ -29,6 +29,7 @@ namespace Cyborg.Dynamics.Forces
         {
             _i0 = index;
             Strength = dragCoefficient;
+            _delta = Vec3.Zero;
         }
 
 
@@ -36,9 +37,11 @@ namespace Cyborg.Dynamics.Forces
         public void Calculate(List<Particle> particles)
         {
             var p = particles[_i0];
+
             //F = -1 * 1r(density of liquid) * vel^2 * 1A(frontal Area) * c * vel.Unit
 
-            _delta = -1 * (p.Vel.Length * p.Vel.Length) * Strength * p.Vel.Unit;
+            if (p.Vel.Length != 0) _delta = -1 * (p.Vel.Length * p.Vel.Length) * Strength * p.Vel.Unit;
+            else _delta = Vec3.Zero;
 
         }
 

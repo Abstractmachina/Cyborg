@@ -88,6 +88,13 @@ namespace Cyborg.Core
             v.Z *= scalar;
             return v;
         }
+        public static Vec3 operator /(double scalar, Vec3 v)
+        {
+            v.X = scalar /v.X;
+            v.Y = scalar / v.Y;
+            v.Z = scalar / v.Z;
+            return v;
+        }
         #endregion
 
 
