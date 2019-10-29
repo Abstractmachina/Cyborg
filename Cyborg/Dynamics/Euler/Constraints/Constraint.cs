@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cyborg.Dynamics.Constraints
+namespace Cyborg.Dynamics.Euler.Constraints
 {
     public abstract class Constraint
     {

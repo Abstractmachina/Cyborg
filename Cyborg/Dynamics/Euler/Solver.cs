@@ -1,13 +1,17 @@
 ﻿using Cyborg.Core;
+using Cyborg.Dynamics.Euler.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Cyborg.Dynamics.Interfaces;
 
-namespace Cyborg.Dynamics
+namespace Cyborg.Dynamics.Euler
 {
+
+    /// <summary>
+    /// Euler solver. 
+    /// </summary>
     public class Solver
     {
 

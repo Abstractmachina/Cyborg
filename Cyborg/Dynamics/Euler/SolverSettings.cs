@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cyborg.Dynamics
+namespace Cyborg.Dynamics.Euler
 {
     public class SolverSettings
     {

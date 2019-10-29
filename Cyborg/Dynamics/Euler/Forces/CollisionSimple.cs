@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Cyborg.Dynamics.Interfaces;
 using Cyborg.Core;
+using Cyborg.Dynamics.Euler.Interfaces;
 
-namespace Cyborg.Dynamics.Forces
+namespace Cyborg.Dynamics.Euler.Forces
 {
-    public class Collision : Force, IConstraint
+    public class CollisionSimple : Force, IConstraint
     {
         private int _i0;
         private Vec3 _delta;
@@ -25,17 +25,17 @@ namespace Cyborg.Dynamics.Forces
             }
         }
 
-        public Collision() { }
-        public Collision(int i) : this(i, 0.6d)
+        public CollisionSimple() { }
+        public CollisionSimple(int i) : this(i, 0.6)
         {
             _i0 = i;
         }
-        public Collision(int i, double strength) : this(i, strength, 1.0d)
+        public CollisionSimple(int i, double strength) : this(i, strength, 1.0)
         {
             _i0 = i;
             Strength = strength;
         }
-        public Collision(int i, double strength, double hardness)
+        public CollisionSimple(int i, double strength, double hardness)
         {
             _i0 = i;
             _delta = new Vec3();
@@ -58,28 +58,14 @@ namespace Cyborg.Dynamics.Forces
                     if (dist <= current.Radius + p.Radius)
                     {
                         collisionCount++;
-                        current.Pos = p.Pos + v  * -1; //make sure there are no negative values for dist
-                        var hardnessFactor = 1 + ((current.Radius + p.Radius) - dist) * _hardness; 
-                        //if current is moving
-                        if (p.Vel.Length != 0) 
-                        {
-                            Vec3 normal = v;
-                            var dot = normal * current.Vel;
-                            var nProj = (dot / normal.Length) * normal.Unit;
-                            var d = 2 * (nProj - p.Vel);
-                            var vm = (p.Vel + d) * -1;
-                            deltaSum += vm * Strength;
-                        }
-                        //if current is inert
-                        else
-                        {
-                            deltaSum += -1 * v.Unit * Strength;
-                        }
+                        //current.Pos = p.Pos + v * -1; //make sure there are no negative values for dist
+
+                        deltaSum += -1 * v.Unit * Strength;
+
                     }
                 }
             }
-            if (collisionCount != 0)
-            _delta = deltaSum * (1/collisionCount);
+            if (collisionCount != 0) _delta = deltaSum / collisionCount;
         }
 
         public void Apply(List<Particle> particles)

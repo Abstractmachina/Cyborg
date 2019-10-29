@@ -50,10 +50,10 @@ namespace Cyborg.GH.Components
             var pts = new List<Point3d>();
             bool write = false;
 
-            if (!DA.GetData("Output path", ref path)) return;
-            if (!DA.GetData("File name", ref name)) return;
-            if (!DA.GetData("Point list", ref pts)) return;
-            if (!DA.GetData("Write", ref write)) return;
+            if (!DA.GetData(0, ref path)) return;
+            if (!DA.GetData(1, ref name)) return;
+            if (!DA.GetDataList(2, pts)) return;
+            if (!DA.GetData(3, ref write)) return;
 
 
             if (path == null || name == null || pts == null)

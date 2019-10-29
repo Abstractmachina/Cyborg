@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Cyborg.Core;
 
-namespace Cyborg.Dynamics
+namespace Cyborg.Dynamics.Euler
 {
     public class Particle
     {

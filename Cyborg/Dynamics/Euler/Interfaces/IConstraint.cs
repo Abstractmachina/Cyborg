@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cyborg.Dynamics.Interfaces
+namespace Cyborg.Dynamics.Euler.Interfaces
 {
     public interface IConstraint
     {

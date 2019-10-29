@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cyborg.Dynamics.Forces
+namespace Cyborg.Dynamics.Euler.Forces
 {
     public abstract class Force
     {

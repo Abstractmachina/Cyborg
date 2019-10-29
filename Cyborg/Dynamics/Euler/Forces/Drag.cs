@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cyborg.Core;
-using Cyborg.Dynamics.Interfaces;
+using Cyborg.Dynamics.Euler.Interfaces;
 
-namespace Cyborg.Dynamics.Forces
+namespace Cyborg.Dynamics.Euler.Forces
 {
     public class Drag : Force, IConstraint
     {
