@@ -26,13 +26,9 @@ namespace Cyborg.Dynamics.Verlet.Constraints
             Accel = accel;
         }
 
-        public void Apply(List<VerletParticle> particles)
-        {
-            particles[_i0].AddAccel(_accel);
-        }
         public void Calculate(List<VerletParticle> particles)
         {
-
+            particles[_i0].AddAccel(_accel);
         }
 
         public IEnumerable<int> Indices

@@ -25,7 +25,7 @@ namespace Cyborg.Dynamics.Verlet
 
         public void ApplyConstraints(List<VerletParticle> particles, List<IVerletConstraint> constraints)
         {
-            foreach (var c in constraints) c.Apply(particles);
+            foreach (var c in constraints) c.Calculate(particles);
         }
 
         private void UpdateParticles(List<VerletParticle> particles)

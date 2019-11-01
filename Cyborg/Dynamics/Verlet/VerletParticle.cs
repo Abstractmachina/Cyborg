@@ -13,6 +13,7 @@ namespace Cyborg.Dynamics.Verlet
         private Vec3 _pos;
         private Vec3 _oldPos;
         private Vec3 _accel;
+        private Vec3 _delta;
 
         #region PROPERTIES
         public int Index
@@ -35,6 +36,12 @@ namespace Cyborg.Dynamics.Verlet
             get { return _accel; }
             set { _accel = value; }
         }
+
+        public Vec3 Delta
+        {
+            get { return _delta; }
+            set { _delta = value; }
+        }
         #endregion
 
         public VerletParticle(int i0) : this(i0, Vec3.Zero)
@@ -48,6 +55,7 @@ namespace Cyborg.Dynamics.Verlet
             Pos = pos;
             _oldPos = _pos;
             Accel = Vec3.Zero;
+            _delta = Vec3.Zero;
         }
 
         public void AddAccel(Vec3 accel)
@@ -58,12 +66,19 @@ namespace Cyborg.Dynamics.Verlet
         public void Update(double timeStep)
         {
             //Position = Position + (Position - OldPosition) + Accceleration * Timestep^2
-            //OldPosition = Position
-            Vec3 temp = Pos;
-            Pos += Pos - OldPos + Accel * timeStep * timeStep;
-            _oldPos = temp;
 
-            Accel = Vec3.Zero;
+            //temp pos storage
+            Vec3 temp = Pos;
+
+            Vec3 vel = _pos - _oldPos;
+
+            //this is where all the constraints are calculated
+            _pos += (_pos - _oldPos) + _accel * timeStep * timeStep;
+
+            //record new position. 
+            _oldPos = temp;
+            _delta = Vec3.Zero;
+            //Accel = Vec3.Zero;
         }
 
 

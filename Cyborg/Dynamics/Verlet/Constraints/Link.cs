@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cyborg.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cyborg.Dynamics.Verlet.Constraints
 {
-    public class Link
+    public class Link : IVerletConstraint
     {
 
         private int _i0, _i1;
@@ -25,20 +26,19 @@ namespace Cyborg.Dynamics.Verlet.Constraints
 
         public void Calculate(List<VerletParticle> particles)
         {
-            var p0 = particles[_i0].Pos;
-            var p1 = particles[_i1].Pos;
+            var p0 = particles[_i0];
+            var p1 = particles[_i1];
 
-            var v = p1 - p0;
-            var dist = v.Length;
+            var vel = p1.Pos - p0.Pos;
+            var dist = vel.Length;
             if ( dist > _targetLength)
             {
                 var diff = dist - _targetLength;
-                throw new NotImplementedException();
+                p0.Delta += vel.Unit * diff / 2;
+                p1.Delta += vel.Unit * diff / 2 * -1;
             }
 
         }
-
-
 
         public IEnumerable<int> Indices
         {
