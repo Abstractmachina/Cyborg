@@ -64,6 +64,7 @@
     <Compile Include="Dynamics\Verlet\Constraints\Load.cs" />
     <Compile Include="Dynamics\Verlet\VerletParticle.cs" />
     <Compile Include="Dynamics\Verlet\VerletSolver.cs" />
+    <Compile Include="Dynamics\Verlet\VerletSolverSettings.cs" />
     <Compile Include="Mesh\Edge.cs" />
     <Compile Include="Mesh\Face.cs" />
     <Compile Include="Mesh\Mesh.cs" />

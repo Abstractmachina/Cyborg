@@ -10,7 +10,7 @@ using System.Linq;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
-namespace Cyborg.GH.Components
+namespace Cyborg.GH.Components.IO
 {
     public class ReferenceGroupsComponent : GH_Component
     {

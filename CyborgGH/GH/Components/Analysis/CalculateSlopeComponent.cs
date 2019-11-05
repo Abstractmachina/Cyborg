@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Cyborg.GH.Components
+namespace Cyborg.GH.Components.Analysis
 {
     public class CalculateSlopeComponent : GH_Component
     {

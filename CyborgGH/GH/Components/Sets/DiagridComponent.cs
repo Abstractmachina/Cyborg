@@ -9,7 +9,7 @@ using Rhino.Geometry;
 
 using Cyborg.Params;
 
-namespace Cyborg.GH.Components
+namespace Cyborg.GH.Components.Sets
 {
     public class DiagridComponent : GH_Component
     {

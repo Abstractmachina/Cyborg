@@ -8,18 +8,27 @@ namespace Cyborg.Dynamics.Verlet
 {
     public class VerletSolver
     {
-        public int counter;
+        private int _counter;
+        private VerletSolverSettings _settings;
 
         public VerletSolver()
         {
-            counter = 0;
+            _counter = 0;
+            _settings = new VerletSolverSettings();
         }
+
+        public VerletSolver(VerletSolverSettings settings)
+        {
+            _counter = 0;
+            _settings = settings;
+        }
+
 
         public void Step(List<VerletParticle> particles, List<IVerletConstraint> constraints)
         {
             ApplyConstraints(particles, constraints);
             UpdateParticles(particles);
-            counter++;
+            _counter++;
         }
 
 
