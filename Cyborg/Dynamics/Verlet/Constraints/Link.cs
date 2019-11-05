@@ -33,9 +33,8 @@ namespace Cyborg.Dynamics.Verlet.Constraints
             var dist = vel.Length;
             if ( dist > _targetLength)
             {
-                var diff = dist - _targetLength;
-                p0.Delta += vel.Unit * diff / 2;
-                p1.Delta += vel.Unit * diff / 2 * -1;
+                var diff = (dist - _targetLength) / dist;
+                throw new NotImplementedException();
             }
 
         }

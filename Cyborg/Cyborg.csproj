@@ -59,6 +59,7 @@
     <Compile Include="Dynamics\Euler\Solver.cs" />
     <Compile Include="Dynamics\Euler\SolverSettings.cs" />
     <Compile Include="Dynamics\Verlet\Constraints\Link.cs" />
+    <Compile Include="Dynamics\Verlet\Constraints\Spring.cs" />
     <Compile Include="Dynamics\Verlet\IVerletConstraint.cs" />
     <Compile Include="Dynamics\Verlet\Constraints\Load.cs" />
     <Compile Include="Dynamics\Verlet\VerletParticle.cs" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cyborg.GH
+namespace Cyborg.GH.Components
 {
     struct Strings
     {
@@ -13,5 +13,6 @@ namespace Cyborg.GH
         public static readonly string SUB_CURVE = "Curve";
         public static readonly string SUB_IO = "IO";
         public static readonly string SUB_SET = "Sets";
+        public static readonly string SUB_ANA = "Analysis";
     }
 }

@@ -11,24 +11,24 @@ namespace Cyborg.Dynamics.Verlet.Constraints
     {
 
         private int _i0;
-        private Vec3 _accel;
+        private Vec3 _delta;
 
 
-        public Vec3 Accel
+        public Vec3 Delta
         {
-            get { return _accel; }
-            set { _accel = value; }
+            get { return _delta; }
+            set { _delta = value; }
         }
 
-        public Load(int i0, Vec3 accel)
+        public Load(int i0, Vec3 delta)
         {
             _i0 = i0;
-            Accel = accel;
+            Delta = delta;
         }
 
         public void Calculate(List<VerletParticle> particles)
         {
-            particles[_i0].AddAccel(_accel);
+            particles[_i0].Pos += _delta;
         }
 
         public IEnumerable<int> Indices
