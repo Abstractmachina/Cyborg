@@ -14,23 +14,28 @@ namespace Cyborg.GH
 {
     public class SandboxGH
     {
-        void Main()
+        void Main(Surface surface, List<Rhino.Geometry.Curve> curves, double tol)
         {
-            var tree = new DataTree<Guid>();
 
-
-            int index = 0;
-            foreach (var g in RhinoDoc.ActiveDoc.Groups)
+            var culPatt = new List<bool>();
+            foreach (var c in curves)
             {
-                if (RhinoDoc.ActiveDoc.Objects.FindByGroup(g.Index).Length > 0)
+                bool isContained = false;
+                var cp = c.ToNurbsCurve().Points;
+                foreach (var p in cp)
                 {
-                    var p = new GH_Path(index++);
-                    tree.AddRange(RhinoDoc.ActiveDoc.Objects.FindByGroup(g.Index).Select(o => o.Id), p);
+                    double u = 0;
+                    double v = 0;
+                    surface.ClosestPoint(p.Location, out u, out v);
+                    if (surface.PointAt(u,v).DistanceTo(p.Location) < tol)
+                    {
+                        isContained = true;
+                        break;
+                    }
                 }
+                culPatt.Add(isContained);
+
             }
-
-
-            var result = tree;
         }
     }
 }

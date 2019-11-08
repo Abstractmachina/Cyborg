@@ -26,6 +26,19 @@ namespace Cyborg.Dynamics.Verlet.Constraints
 
         public void Calculate(List<VerletParticle> particles)
         {
+
+            //var p0 = particles[_i0];
+            //var p1 = particles[_i1];
+
+            //var vec = p1.Pos - p0.Pos;
+            //var length = vec.Length;
+
+            //var diff = (length - _targetLength) / length * _stiffness;
+
+            //p0.Pos += vec * (diff / 2);
+            //p1.Pos -= vec * (diff / 2);
+
+
             var p0 = particles[_i0];
             var p1 = particles[_i1];
 
@@ -33,8 +46,9 @@ namespace Cyborg.Dynamics.Verlet.Constraints
             var dist = vel.Length;
             if ( dist > _targetLength)
             {
-                var diff = (dist - _targetLength) / dist;
-                throw new NotImplementedException();
+                var diff = (dist - _targetLength) / dist * _stiffness;
+                p0.Pos += vel * (diff / 2);
+                p1.Pos -= vel * (diff / 2);
             }
 
         }
@@ -58,6 +72,10 @@ namespace Cyborg.Dynamics.Verlet.Constraints
             }
         }
 
+        public override string ToString()
+        {
+            return String.Format("Link {{ i0: {0}, i1: {1}, target length: {2}, stiffness: {3} }}", _i0, _i1, _targetLength, _stiffness);
+        }
 
     }
 }

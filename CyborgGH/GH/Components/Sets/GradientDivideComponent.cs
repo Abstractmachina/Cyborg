@@ -7,7 +7,7 @@ using Rhino.Geometry;
 
 using Cyborg.Params;
 
-namespace Cyborg.GH.Components
+namespace Cyborg.GH.Components.Sets
 {
     public class GradientDivideComponent : GH_Component
     {
@@ -17,7 +17,7 @@ namespace Cyborg.GH.Components
         public GradientDivideComponent()
           : base("Gradient Division", "GradDiv",
               "Discretized gradient division of linear parametric space with attractor points.",
-              Strings.LIB_NAME, Strings.SUB_NURBS)
+              Strings.LIB_NAME, Strings.SUB_SET)
         {
         }
 
@@ -32,8 +32,8 @@ namespace Cyborg.GH.Components
             pManager.AddNumberParameter("Center Points", "t0", "Center Points of gradient", GH_ParamAccess.list);
             pManager.AddNumberParameter("Minimum Distance", "D0", "Mininum Step Distance", GH_ParamAccess.item);
             pManager.AddNumberParameter("Maximum Distance", "D1", "Maximum Step Distance", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Merge Threshold", "TH", "Merge threshold of center points", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Buffer Size", "B", "buffer size before increment takes effect", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Merge Threshold", "TH", "Merge threshold of center points (R ", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Buffer Size", "B", "buffer size (N > 0) before increment takes effect. ", GH_ParamAccess.item);
             pManager.AddNumberParameter("Factor", "F", "Scale factor of gradient step", GH_ParamAccess.item);
         }
 

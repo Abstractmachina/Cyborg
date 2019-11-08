@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="GH\Components\Analysis\CalculateSlopeComponent.cs" />
     <Compile Include="GH\Components\Sets\DiagridComponent.cs" />
-    <Compile Include="GH\Components\GradientDivideComponent.cs" />
+    <Compile Include="GH\Components\Sets\GradientDivideComponent.cs" />
     <Compile Include="GH\Components\IO\ReferenceBlocksComponent.cs" />
     <Compile Include="GH\Components\IO\ReferenceGroupsComponent.cs" />
     <Compile Include="GH\Conversions.cs" />

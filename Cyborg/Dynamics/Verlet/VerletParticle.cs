@@ -30,14 +30,12 @@ namespace Cyborg.Dynamics.Verlet
             get { return _oldPos; }
             
         }
-
-
         public double Radius
         {
             get { return _radius; }
             set
             {
-                if (value <= 0) throw new ArgumentOutOfRangeException();
+                if (value <= 0) throw new ArgumentOutOfRangeException("Radius must be > 0");
                 else _radius = value;
             }
         }

@@ -37,7 +37,7 @@ namespace Cyborg.Dynamics.Verlet
             foreach (var c in constraints) c.Calculate(particles);
         }
 
-        private void UpdateParticles(List<VerletParticle> particles)
+        private void UpdateParticles(IEnumerable<VerletParticle> particles)
         {
             foreach (var p in particles) p.Update(1.0);
         }
