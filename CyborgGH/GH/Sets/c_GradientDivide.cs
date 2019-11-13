@@ -7,14 +7,14 @@ using Rhino.Geometry;
 
 using Cyborg.Params;
 
-namespace Cyborg.GH.Components.Sets
+namespace Cyborg.GH.Sets
 {
-    public class GradientDivideComponent : GH_Component
+    public class GradientDivide : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the GradientDivideComponent class.
         /// </summary>
-        public GradientDivideComponent()
+        public GradientDivide()
           : base("Gradient Division", "GradDiv",
               "Discretized gradient division of linear parametric space with attractor points.",
               Strings.LIB_NAME, Strings.SUB_SET)

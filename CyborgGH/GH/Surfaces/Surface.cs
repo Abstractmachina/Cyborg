@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Cyborg.GH
+namespace Cyborg.GH.Surfaces
 {
     public static class Surfaces
     {
@@ -40,7 +40,7 @@ namespace Cyborg.GH
             foreach (var c in inCrvs)
             {
                 var L = new List<Rhino.Geometry.Curve>();
-                if (!Curve.ExplodeCurveSegments(ref L, c, true)) return false;
+                if (!Curves.ExplodeCurveSegments(ref L, c, true)) return false;
                 else exCrvs.Add(L);
             }
 

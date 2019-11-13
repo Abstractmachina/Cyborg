@@ -7,7 +7,7 @@ using System.Linq;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Cyborg.GH.Components
+namespace Cyborg.GH.Curves
 {
     public class FilletExtend : GH_Component
     {
@@ -53,7 +53,7 @@ namespace Cyborg.GH.Components
             if (!DA.GetData(1, ref c2)) return;
             if (!DA.GetData(2, ref radius)) return;
 
-            var result = Curve.Fillet(c1, c2, radius);
+            var result = Curves.Fillet(c1, c2, radius);
 
             DA.SetDataList(0, result);
         }

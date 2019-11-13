@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cyborg.GH
+namespace Cyborg.GH.Curves
 {
-    public static class Curve
+    public static class Curves
     {
 
 

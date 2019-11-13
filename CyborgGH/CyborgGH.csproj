@@ -57,25 +57,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GH\Components\Analysis\CalculateSlopeComponent.cs" />
-    <Compile Include="GH\Components\Sets\DiagridComponent.cs" />
-    <Compile Include="GH\Components\Sets\GradientDivideComponent.cs" />
-    <Compile Include="GH\Components\IO\ReferenceBlocksComponent.cs" />
-    <Compile Include="GH\Components\IO\ReferenceGroupsComponent.cs" />
-    <Compile Include="GH\Conversions.cs" />
+    <Compile Include="GH\Analysis\c_CalculateSlope.cs" />
+    <Compile Include="GH\Curves\c_CloseCurve.cs" />
+    <Compile Include="GH\Sets\c_Diagrid.cs" />
+    <Compile Include="GH\Sets\c_GradientDivide.cs" />
+    <Compile Include="GH\IO\c_ReferenceBlocks.cs" />
+    <Compile Include="GH\IO\c_ReferenceGroups.cs" />
+    <Compile Include="GH\Conversion.cs" />
     <Compile Include="GH\SandboxGH.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="GH\Curve.cs" />
-    <Compile Include="GH\Components\ExtendFilletComponent.cs" />
-    <Compile Include="GH\Components\Strings.cs" />
-    <Compile Include="GH\Components\IO\WriteToCSVComponent.cs" />
-    <Compile Include="GH\Surface.cs" />
+    <Compile Include="GH\Curves\Curve.cs" />
+    <Compile Include="GH\Curves\c_FilletExtend.cs" />
+    <Compile Include="GH\Strings.cs" />
+    <Compile Include="GH\IO\c_WriteToCSV.cs" />
+    <Compile Include="GH\Surfaces\Surface.cs" />
     <Compile Include="GH\Types.cs" />
-    <Compile Include="GH\Components\LoftSplitComponent.cs" />
+    <Compile Include="GH\Surfaces\c_LoftSplit.cs" />
     <Compile Include="CyborgInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

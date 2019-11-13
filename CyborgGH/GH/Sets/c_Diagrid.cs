@@ -9,16 +9,16 @@ using Rhino.Geometry;
 
 using Cyborg.Params;
 
-namespace Cyborg.GH.Components.Sets
+namespace Cyborg.GH.Sets
 {
-    public class DiagridComponent : GH_Component
+    public class BuildDiagrid : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the DiagridComponent class.
         /// </summary>
-        public DiagridComponent()
-          : base("Diagrid", "Diagrid",
-              "Create diagrid from 2D Matrix.",
+        public BuildDiagrid()
+          : base("Build diagrid structure", "Diagrid",
+              "Build diagrid from 2D Matrix of any type.",
               Strings.LIB_NAME, Strings.SUB_SET)
         {
         }

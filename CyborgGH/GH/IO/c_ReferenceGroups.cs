@@ -10,14 +10,14 @@ using System.Linq;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
-namespace Cyborg.GH.Components.IO
+namespace Cyborg.GH.IO
 {
-    public class ReferenceGroupsComponent : GH_Component
+    public class ReferenceGroups : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the ReferenceGroupsComponent class.
         /// </summary>
-        public ReferenceGroupsComponent()
+        public ReferenceGroups()
           : base("Reference Rhino Doc Groups", "RefGroups",
               "Reference all groups of the current Rhino document.",
               Strings.LIB_NAME, Strings.SUB_IO)

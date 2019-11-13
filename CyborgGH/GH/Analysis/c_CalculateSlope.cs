@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Cyborg.GH.Components.Analysis
+namespace Cyborg.GH.Analysis
 {
-    public class CalculateSlopeComponent : GH_Component
+    public class CalculateSlope : GH_Component
     {
-        public CalculateSlopeComponent()
-          : base("Slope Calculator", "Slope",
+        public CalculateSlope()
+          : base("Calculate Slope", "Slope",
               "Get slope of a given line",
               Strings.LIB_NAME, Strings.SUB_ANA)
         {

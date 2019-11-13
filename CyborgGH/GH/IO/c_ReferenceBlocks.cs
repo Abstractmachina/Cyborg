@@ -8,14 +8,14 @@ using Rhino.Geometry;
 using Grasshopper.Kernel.Types;
 using System.Linq;
 
-namespace Cyborg.GH.Components.IO
+namespace Cyborg.GH.IO
 {
-    public class ReferenceBlocksComponent : GH_Component
+    public class ReferenceBlocks : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the ReferenceBlocksComponent class.
         /// </summary>
-        public ReferenceBlocksComponent()
+        public ReferenceBlocks()
           : base("Reference Rhino Doc Blocks", "RefBlocks",
               "Reference blocks in current Rhino document.",
               Strings.LIB_NAME, Strings.SUB_IO)

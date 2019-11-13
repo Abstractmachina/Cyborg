@@ -14,17 +14,17 @@ using Cyborg.CyborgGH.Properties;
 // folder in Grasshopper.
 // You can use the _GrasshopperDeveloperSettings Rhino command for that.
 
-namespace Cyborg.GH.Components
+namespace Cyborg.GH.Surfaces
 {
-    public class LoftSplitComponent : GH_Component
+    public class LoftSplit : GH_Component
     {
         /// <summary>
         /// 
         /// </summary>
-        public LoftSplitComponent()
+        public LoftSplit()
           : base("Loft Split", "LoftSplit",
-              "Loft and split at tangents.",
-              Strings.LIB_NAME, Strings.SUB_NURBS)
+              "Loft and return result split at tangents.",
+              Strings.LIB_NAME, Strings.SUB_SRF)
         {
 
         }

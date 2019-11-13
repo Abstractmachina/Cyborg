@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Cyborg.GH.Components.IO
+namespace Cyborg.GH.IO
 {
-    public class WriteToCSVComponent : GH_Component
+    public class WriteToCSV : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the WriteToCSVComponent class.
         /// </summary>
-        public WriteToCSVComponent()
+        public WriteToCSV()
           : base("Write To CSV", "writeCSV",
               "Write a list of points to CSV format",
               Strings.LIB_NAME, Strings.SUB_IO)
