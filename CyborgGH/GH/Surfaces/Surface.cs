@@ -40,7 +40,7 @@ namespace Cyborg.GH.Surfaces
             foreach (var c in inCrvs)
             {
                 var L = new List<Rhino.Geometry.Curve>();
-                if (!Curves.ExplodeCurveSegments(ref L, c, true)) return false;
+                if (!Cyborg.GH.Curves.Curves.ExplodeCurveSegments(ref L, c, true)) return false;
                 else exCrvs.Add(L);
             }
 

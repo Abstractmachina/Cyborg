@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="GH\Analysis\c_CalculateSlope.cs" />
     <Compile Include="GH\Curves\c_CloseCurve.cs" />
+    <Compile Include="GH\IO\c_WriteToDWG.cs" />
+    <Compile Include="GH\IO\Layers.cs" />
     <Compile Include="GH\Sets\c_Diagrid.cs" />
     <Compile Include="GH\Sets\c_GradientDivide.cs" />
     <Compile Include="GH\IO\c_ReferenceBlocks.cs" />
@@ -70,7 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="GH\Curves\Curve.cs" />
+    <Compile Include="GH\Curves\Curves.cs" />
     <Compile Include="GH\Curves\c_FilletExtend.cs" />
     <Compile Include="GH\Strings.cs" />
     <Compile Include="GH\IO\c_WriteToCSV.cs" />
