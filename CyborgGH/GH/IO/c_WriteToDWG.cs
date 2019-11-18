@@ -4,11 +4,16 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Data;
+using Grasshopper.Kernel.Special;
+using System.Drawing;
 
 namespace Cyborg.GH.IO
 {
     public class WriteToDWG : GH_Component
     {
+
+        private bool _schemeExists;
+
         /// <summary>
         /// Initializes a new instance of the c_WriteToDWG class.
         /// </summary>
@@ -17,6 +22,7 @@ namespace Cyborg.GH.IO
               "Export Geometry to DWG.",
               Strings.LIB_NAME, Strings.SUB_IO)
         {
+            _schemeExists = false;
         }
 
         /// <summary>
@@ -24,12 +30,13 @@ namespace Cyborg.GH.IO
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddBooleanParameter("Write", "W", "Execute Write.", GH_ParamAccess.item, false);
+            pManager.AddBooleanParameter("Write", "W", "Execute Write.", GH_ParamAccess.item, false); 
             pManager.AddGeometryParameter("Geometry", "G", "Geometry to be exported.", GH_ParamAccess.tree);
             pManager.AddTextParameter("Layer", "L", "Set layer. Note: Does not support nesting.", GH_ParamAccess.list);
             pManager.AddColourParameter("Color", "C", "Set layer color.", GH_ParamAccess.list);
             pManager.AddTextParameter("File Name", "N", "Set file name", GH_ParamAccess.list);
             pManager.AddTextParameter("Path", "P", "Set directory path", GH_ParamAccess.list);
+            pManager.AddTextParameter("Scheme", "S", "Set export scheme", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -40,12 +47,61 @@ namespace Cyborg.GH.IO
             pManager.AddTextParameter("debug", "debug", "debug", GH_ParamAccess.list);
         }
 
+
+        
+
+        protected override void BeforeSolveInstance()
+        {
+
+            var component = this;
+            var gh_doc = OnPingDocument();
+
+            if (!_schemeExists && component.Params.Input[6].Sources.Count == 0)
+            {
+
+                //if (gh_doc == null) return;
+
+                var valList = new GH_ValueList();
+
+                valList.CreateAttributes();
+                valList.Attributes.Pivot = new PointF(component.Attributes.Pivot.X - 200, (float)component.Attributes.Pivot.Y + 50);
+
+                valList.ListItems.Clear();
+
+                var item0 = new GH_ValueListItem("R12 Lines & Arcs", "\"R12 Lines & Arcs\"");
+                var item1 = new GH_ValueListItem("Default", "\"Default\"");
+                var item2 = new GH_ValueListItem("2007 Lines", "\"2007 Lines\"");
+                var item3 = new GH_ValueListItem("2007 Natural", "\"2007 Natural\"");
+                var item4 = new GH_ValueListItem("2007 Polylines", "\"2007 Polylines\"");
+                var item5 = new GH_ValueListItem("2007 Solids", "\"2007 Solids\"");
+                var item6 = new GH_ValueListItem("CAM Imperial", "\"CAM Imperial\"");
+                var item7 = new GH_ValueListItem("CAM Metric", "\"CAM Metric\"");
+                var item8 = new GH_ValueListItem("R12 Natural", "\"R12 Natural\"");
+
+                valList.ListItems.Add(item0);
+                valList.ListItems.Add(item1);
+                valList.ListItems.Add(item2);
+                valList.ListItems.Add(item3);
+                valList.ListItems.Add(item4);
+                valList.ListItems.Add(item5);
+                valList.ListItems.Add(item6);
+                valList.ListItems.Add(item7);
+                valList.ListItems.Add(item8);
+                gh_doc.AddObject(valList, false);
+                component.Params.Input[6].AddSource(valList);
+
+                _schemeExists = true;
+            }
+
+        }
+
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            
 
             var debug = new List<string>();
 
@@ -55,6 +111,7 @@ namespace Cyborg.GH.IO
             var i_colors = new List<System.Drawing.Color>();
             var i_names = new List<string>();
             var i_paths = new List<string>();
+            string i_scheme = "";
 
             if (!DA.GetData(0, ref i_write)) return;
             if (!DA.GetDataTree(1, out i_geom)) return;
@@ -62,7 +119,14 @@ namespace Cyborg.GH.IO
             if (!DA.GetDataList(3, i_colors)) return;
             if (!DA.GetDataList(4, i_names)) return;
             if (!DA.GetDataList(5, i_paths)) return;
+            if (!DA.GetData(6, ref i_scheme)) return;
 
+            foreach(var g in i_geom.AllData(false))debug.Add("input geom: " + g);
+            foreach (var l in i_layers) debug.Add("layer: " + l);
+            foreach (var c in i_colors) debug.Add("color: " + c);
+            foreach (var n in i_names) debug.Add("file name: " + n);
+            foreach (var p in i_paths) debug.Add("file path: " + p);
+            debug.Add("scheme: " + i_scheme);
 
             if (i_write)
             {
@@ -75,7 +139,6 @@ namespace Cyborg.GH.IO
                     var ids = new List<Guid>();
                     var oTable = Rhino.RhinoDoc.ActiveDoc.Objects;
 
-                    string scheme = "R12 Lines & Arcs";
                     string outputPath = "";
 
 
@@ -96,10 +159,13 @@ namespace Cyborg.GH.IO
                     //bake and export geometry
                     foreach (var o in branch)
                     {
-                        if (o is Curve)
+
+                        debug.Add(o.GetType().ToString());
+                        if (o is GH_Curve)
                         {
-                            //oTable.AddCurve((Curve) o);
-                            oTable.AddCurve((Curve)o, attr);
+                            Curve c = null;
+                            GH_Convert.ToCurve(o, ref c, GH_Conversion.Both);
+                            oTable.AddCurve(c, attr);
                             //Print(oTable.MostRecentObject().Id.ToString());
                             ids.Add(oTable.MostRecentObject().Id);
 
@@ -114,7 +180,7 @@ namespace Cyborg.GH.IO
                         else outputPath = i_paths[i] + i_names[i];
                     }
                     outputPath += ".dwg";
-                    string macro = String.Format("!_-export {0} Scheme {1} _Enter", outputPath, scheme);
+                    string macro = String.Format("!_-export {0} Scheme {1} _Enter", outputPath, i_scheme);
 
                     //select baked objects and export 
                     foreach (var id in ids) oTable.FindId(id).Select(true);
