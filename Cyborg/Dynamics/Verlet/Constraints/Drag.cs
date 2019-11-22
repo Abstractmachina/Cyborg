@@ -38,9 +38,9 @@ namespace Cyborg.Dynamics.Verlet.Constraints
             var p = particles[_i0];
 
             //F = -1 * 1r(density of liquid) * vel^2 * 1A(frontal Area) * c * vel.Unit
+            
             var vel = p.Pos - p.OldPos;
-
-            p.Pos += vel.Unit * _dragCoefficient * vel.Length * vel.Length * -1;
+            if (vel.Length != 0) p.Pos += vel.Unit * _dragCoefficient * vel.Length * vel.Length * -1;
             
         }
 

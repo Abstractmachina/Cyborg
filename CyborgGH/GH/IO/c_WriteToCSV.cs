@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Cyborg.CyborgGH.Properties;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
@@ -91,7 +91,9 @@ namespace Cyborg.GH.IO
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return null;
+                //return null;
+
+                return Resources.ic_csv;
             }
         }
 

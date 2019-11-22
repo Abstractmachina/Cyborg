@@ -6,6 +6,7 @@ using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Special;
 using System.Drawing;
+using Cyborg.CyborgGH.Properties;
 
 namespace Cyborg.GH.IO
 {
@@ -65,7 +66,8 @@ namespace Cyborg.GH.IO
 
                 valList.CreateAttributes();
                 valList.Attributes.Pivot = new PointF(component.Attributes.Pivot.X - 200, (float)component.Attributes.Pivot.Y + 50);
-
+                valList.Name = "Scheme";
+                valList.NickName = "Scheme";
                 valList.ListItems.Clear();
 
                 var item0 = new GH_ValueListItem("R12 Lines & Arcs", "\"R12 Lines & Arcs\"");
@@ -202,7 +204,9 @@ namespace Cyborg.GH.IO
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return null;
+                //return null;
+
+                return Resources.ic_dwg;
             }
         }
 

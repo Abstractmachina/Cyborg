@@ -84,6 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Bitmap1.bmp" />
+    <None Include="Resources\ic_csv.png" />
+    <None Include="Resources\ic_dwg.png" />
+    <None Include="Resources\ic_dwg.bmp" />
     <None Include="Resources\FilletExtend.png" />
     <None Include="Resources\LoftSplit.png" />
     <None Include="Resources\cyborg_logo.png" />

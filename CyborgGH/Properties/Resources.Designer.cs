@@ -83,6 +83,26 @@ namespace Cyborg.CyborgGH.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ic_csv {
+            get {
+                object obj = ResourceManager.GetObject("ic_csv", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_dwg {
+            get {
+                object obj = ResourceManager.GetObject("ic_dwg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LoftSplit {
             get {
                 object obj = ResourceManager.GetObject("LoftSplit", resourceCulture);

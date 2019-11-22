@@ -15,6 +15,26 @@ namespace Cyborg.Dynamics.Verlet.Constraints
         private double _stiffness;
 
 
+        public double TargetLength
+        {
+            get { return _targetLength; }
+            set
+            {
+                if (value <= 0) throw new ArgumentOutOfRangeException("Value must be > 0");
+                else _targetLength = value;
+            }
+        }
+
+        public double Stiffness
+        {
+            get { return _stiffness; }
+            set
+            {
+                if (value < 0) throw new ArgumentOutOfRangeException("Value must be > 0");
+                else _stiffness = value;
+            }
+        }
+
         public Link(int i0, int i1, double targetLength, double stiffness) {
             _i0 = i0;
             _i1 = i1;
@@ -22,6 +42,8 @@ namespace Cyborg.Dynamics.Verlet.Constraints
             _stiffness = stiffness;
 
         }
+
+       
 
 
         public void Calculate(List<VerletParticle> particles)
