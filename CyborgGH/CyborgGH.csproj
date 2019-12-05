@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="GH\Analysis\c_CalculateSlope.cs" />
     <Compile Include="GH\Curves\c_CloseCurve.cs" />
+    <Compile Include="GH\IO\c_ReferenceBlocks_multi.cs" />
     <Compile Include="GH\IO\c_WriteToDWG.cs" />
     <Compile Include="GH\IO\Layers.cs" />
     <Compile Include="GH\Sets\c_Diagrid.cs" />
