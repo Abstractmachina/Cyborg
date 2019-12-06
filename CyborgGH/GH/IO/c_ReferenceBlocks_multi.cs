@@ -8,10 +8,12 @@ using Rhino.Geometry;
 using Grasshopper.Kernel.Types;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
+using Rhino.DocObjects;
 
 namespace Cyborg.GH.IO
 {
-    public class ReferenceBlocks_multi : GH_TaskCapableComponent<ReferenceBlocks_multi.SolveResults>
+    public class ReferenceBlocks_multi : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the ReferenceBlocksComponent class.
@@ -29,7 +31,6 @@ namespace Cyborg.GH.IO
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("layers", "L", "Layer Filter", GH_ParamAccess.list);
-            pManager[0].Optional = true;
         }
 
         /// <summary>
@@ -38,52 +39,9 @@ namespace Cyborg.GH.IO
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddGeometryParameter("Geometry", "G", "Blocks as exploded geometry", GH_ParamAccess.tree);
+            pManager.AddTextParameter("debug", "debug", "debug", GH_ParamAccess.list);
         }
 
-        private static SolveResults ComputeBlocks(List<string> layers)
-        {
-            SolveResults results = new SolveResults();
-
-            var tree = new GH_Structure<IGH_GeometricGoo>();
-            
-            if (layers[0] != null)
-            {
-                int ind = 0;
-                foreach (var o in RhinoDoc.ActiveDoc.Objects)
-                {
-                    if (o.ObjectType == Rhino.DocObjects.ObjectType.InstanceReference)
-                    {
-                        var pth = new GH_Path(ind++);
-                        var tempgeom = o.GetSubObjects().Select(oo => oo.Geometry).ToArray();
-                        var templayer = o.GetSubObjects().Select(oo => RhinoDoc.ActiveDoc.Layers.FindIndex(oo.Attributes.LayerIndex).FullPath).ToArray();
-
-                        for (int i = 0; i < tempgeom.Length; i++)
-                        {
-                            if (layers.Contains(templayer[i]))
-                                tree.Append(GH_Convert.ToGeometricGoo(tempgeom[i]), pth);
-                        }
-                        //tree.AddRange(o.GetSubObjects().Select(oo => oo.Geometry), pth);
-                        //layers.AddRange(o.GetSubObjects().Select(oo => RhinoDoc.ActiveDoc.Layers.FindIndex(oo.Attributes.LayerIndex).FullPath), pth);
-                    }
-                }
-            }
-            else
-            {
-                int ind = 0;
-                foreach (var o in RhinoDoc.ActiveDoc.Objects)
-                {
-                    if (o.ObjectType == Rhino.DocObjects.ObjectType.InstanceReference)
-                    {
-                        var pth = new GH_Path(ind++);
-                        tree.AppendRange(o.GetSubObjects().Select(obj => GH_Convert.ToGeometricGoo(obj.Geometry)), pth);
-                    }
-                }
-
-            }
-
-            results.Value = tree;
-            return results;
-        }
 
         /// <summary>
         /// This is the method that actually does the work.
@@ -92,26 +50,67 @@ namespace Cyborg.GH.IO
         protected override void SolveInstance(IGH_DataAccess DA)
         {
 
-            if (InPreSolve)
+            var debug = new List<string>();
+
+            var layers = new List<string>();
+
+            if (!DA.GetDataList(0, layers)) return;
+
+            var tree = new GH_Structure<IGH_GeometricGoo>();
+           // var inputList = RhinoDoc.ActiveDoc.Objects.ToList();
+            var inputList = new List<RhinoObject>();
+
+
+            foreach (var o in RhinoDoc.ActiveDoc.Objects)
             {
-                var layers = new List<string>();
+                inputList.Add(o);
+            }
+            
+            debug.Add("inputList count: " + inputList.Count.ToString());
+            //foreach (var o in inputList) debug.Add("object: " + o.ToString());
 
-                if (!DA.GetDataList(0, layers)) layers.Add(null);
-
-                Task<SolveResults> task = Task.Run(() => ComputeBlocks(layers), CancelToken);
-                TaskList.Add(task);
-                return;
+            var result = new ConcurrentDictionary<int, IEnumerable<IGH_GeometricGoo>>(Environment.ProcessorCount, inputList.Count);
+            for (int i = 0; i < inputList.Count; i++)
+            {
+                result[i] = new List<IGH_GeometricGoo>();
             }
 
-            if (!GetSolveResults(DA, out SolveResults result))
+
+            Parallel.For(0, inputList.Count, i =>
+             {
+                 var o = inputList[i];
+                 if (o.ObjectType == Rhino.DocObjects.ObjectType.InstanceReference)
+                 {
+                     var tempgeom = o.GetSubObjects().Select(oo => oo.Geometry).ToArray();
+                     var templayer = o.GetSubObjects().Select(oo => RhinoDoc.ActiveDoc.Layers.FindIndex(oo.Attributes.LayerIndex).FullPath).ToArray();
+
+                     var outList = new List<IGH_GeometricGoo>();
+                     for (int j = 0; j < tempgeom.Length; j++)
+                     {
+                         if (layers.Contains(templayer[j]))
+
+                         {
+                             //tree.Append(GH_Convert.ToGeometricGoo(tempgeom[i]), pth);
+                             outList.Add(GH_Convert.ToGeometricGoo(tempgeom[j]));
+                         }
+
+                     }
+                     result[i] = outList;
+
+                 }
+
+             }
+            );
+
+            foreach (var branch in result)
             {
-                var layers = new List<string>();
-
-                if (!DA.GetDataList(0, layers)) layers.Add(null);
-
-                result = ComputeBlocks(layers);
+                debug.Add("index: " + branch.Key.ToString() + " || Value: " + branch.Value.ToString());
+                var pth = new GH_Path(branch.Key);
+                tree.AppendRange(branch.Value, pth);
             }
-            DA.SetDataTree(0, result.Value);
+
+            DA.SetDataTree(0, tree);
+            DA.SetDataList(1, debug);
 
         }
 
@@ -136,11 +135,7 @@ namespace Cyborg.GH.IO
             get { return new Guid("247daa54-df92-42cf-85e7-5dc5d509579f"); }
         }
 
-        public class SolveResults
-        {
-            public GH_Structure<IGH_GeometricGoo> Value { get; set; }
-        }
     }
 
-    
+
 }
