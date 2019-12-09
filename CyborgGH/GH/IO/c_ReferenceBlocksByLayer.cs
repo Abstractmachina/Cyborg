@@ -1,17 +1,25 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Cyborg.CyborgGH.Properties;
 using Cyborg.GH;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using Rhino;
+using Rhino.DocObjects;
 using Rhino.Geometry;
 
 namespace Cyborg.CyborgGH.GH.IO
 {
     public class c_ReferenceBlocksByLayer : GH_Component
     {
+
+
+        private bool computeParallel;
         /// <summary>
         /// Initializes a new instance of the c_ReferenceBlocksByLayer class.
         /// </summary>
@@ -20,6 +28,7 @@ namespace Cyborg.CyborgGH.GH.IO
               "Reference block geometry in current Rhino document by geometry layer.",
               Strings.LIB_NAME, Strings.SUB_IO)
         {
+            computeParallel = true;
         }
 
         /// <summary>
@@ -27,7 +36,7 @@ namespace Cyborg.CyborgGH.GH.IO
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("layers", "L", "Layer Filter", GH_ParamAccess.list);
+            pManager.AddTextParameter("Layer FIlter", "L", "Specify layers that geometry is in (not blocks)", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -44,13 +53,68 @@ namespace Cyborg.CyborgGH.GH.IO
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-
             var layers = new List<string>();
-
             if (!DA.GetDataList(0, layers)) return;
 
-            var tree = new GH_Structure<IGH_GeometricGoo>();
+            if (computeParallel) DA.SetDataTree(0, ProcessBlocks_Parallel(layers));
+            else DA.SetDataTree(0, ProcessBlocks(layers));
+        }
 
+        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public GH_Structure<IGH_GeometricGoo> ProcessBlocks_Parallel(List<string> layers)
+        {
+
+            // var inputList = RhinoDoc.ActiveDoc.Objects.ToList();
+            var inputList = new List<RhinoObject>();
+            //for some reason, cant convert directly to list
+            foreach (var o in RhinoDoc.ActiveDoc.Objects) inputList.Add(o);
+
+            //instantiate dictionary
+            var result = new ConcurrentDictionary<int, IEnumerable<IGH_GeometricGoo>>(Environment.ProcessorCount, inputList.Count);
+            for (int i = 0; i < inputList.Count; i++)
+            {
+                result[i] = new List<IGH_GeometricGoo>();
+            }
+
+            Parallel.For(0, inputList.Count, i =>
+            {
+                var o = inputList[i];
+                if (o.ObjectType == Rhino.DocObjects.ObjectType.InstanceReference)
+                {
+                    var tempgeom = o.GetSubObjects().Select(oo => oo.Geometry).ToArray();
+                    var templayer = o.GetSubObjects().Select(oo => RhinoDoc.ActiveDoc.Layers.FindIndex(oo.Attributes.LayerIndex).FullPath).ToArray();
+
+                    var outList = new List<IGH_GeometricGoo>();
+                    for (int j = 0; j < tempgeom.Length; j++) if (layers.Contains(templayer[j])) outList.Add(GH_Convert.ToGeometricGoo(tempgeom[j]));
+                    result[i] = outList;
+                }
+            }
+            );
+
+            var outGeom = new GH_Structure<IGH_GeometricGoo>();
+            foreach (var branch in result)
+            {
+                var pth = new GH_Path(branch.Key);
+                outGeom.AppendRange(branch.Value, pth);
+            }
+
+            return outGeom;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="layers"></param>
+        /// <returns></returns>
+        private GH_Structure<IGH_GeometricGoo> ProcessBlocks(List<string> layers)
+        {
+
+            var tree = new GH_Structure<IGH_GeometricGoo>();
             int ind = 0;
             foreach (var o in RhinoDoc.ActiveDoc.Objects)
             {
@@ -64,15 +128,34 @@ namespace Cyborg.CyborgGH.GH.IO
                     {
                         if (layers.Contains(templayer[i]))
                             tree.Append(GH_Convert.ToGeometricGoo(tempgeom[i]), pth);
-
                     }
                     //tree.AddRange(o.GetSubObjects().Select(oo => oo.Geometry), pth);
                     //layers.AddRange(o.GetSubObjects().Select(oo => RhinoDoc.ActiveDoc.Layers.FindIndex(oo.Attributes.LayerIndex).FullPath), pth);
                 }
             }
 
-            DA.SetDataTree(0, tree);
+            return tree;
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="menu"></param>
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, "Parallel Computing", OnClick_Parallel, true, computeParallel);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClick_Parallel(object sender, EventArgs e)
+        {
+            computeParallel = !computeParallel;
+            this.ExpireSolution(true);
         }
 
         /// <summary>
@@ -82,9 +165,8 @@ namespace Cyborg.CyborgGH.GH.IO
         {
             get
             {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return null;
+                return Resources.ic_refBlocksByLayer;
+                //return null;
             }
         }
 

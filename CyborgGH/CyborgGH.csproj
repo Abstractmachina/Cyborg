@@ -60,12 +60,12 @@
     <Compile Include="GH\Analysis\c_CalculateSlope.cs" />
     <Compile Include="GH\Curves\c_CloseCurve.cs" />
     <Compile Include="GH\IO\c_ReferenceBlocksByLayer.cs" />
-    <Compile Include="GH\IO\c_ReferenceBlocks_multi.cs" />
+    <Compile Include="GH\IO\OBSOLETE_c_ReferenceBlocks_multi.cs" />
     <Compile Include="GH\IO\c_WriteToDWG.cs" />
     <Compile Include="GH\IO\Layers.cs" />
     <Compile Include="GH\Sets\c_Diagrid.cs" />
     <Compile Include="GH\Sets\c_GradientDivide.cs" />
-    <Compile Include="GH\IO\c_ReferenceBlocks.cs" />
+    <Compile Include="GH\IO\OBSOLETE_c_ReferenceBlocks.cs" />
     <Compile Include="GH\IO\c_ReferenceGroups.cs" />
     <Compile Include="GH\Conversion.cs" />
     <Compile Include="GH\SandboxGH.cs" />
@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Bitmap1.bmp" />
+    <None Include="Resources\ic_refBlocksByLayer.png" />
     <None Include="Resources\ic_csv.png" />
     <None Include="Resources\ic_dwg.png" />
     <None Include="Resources\ic_dwg.bmp" />

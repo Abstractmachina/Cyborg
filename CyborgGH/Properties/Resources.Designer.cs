@@ -103,6 +103,16 @@ namespace Cyborg.CyborgGH.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ic_refBlocksByLayer {
+            get {
+                object obj = ResourceManager.GetObject("ic_refBlocksByLayer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LoftSplit {
             get {
                 object obj = ResourceManager.GetObject("LoftSplit", resourceCulture);
