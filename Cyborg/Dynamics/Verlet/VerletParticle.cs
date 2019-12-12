@@ -63,8 +63,12 @@ namespace Cyborg.Dynamics.Verlet
 
         #endregion
 
-
-        public void Update(double timeStep)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="timeStep"></param>
+        /// <param name="damping"></param>
+        public void Update(double timeStep, double damping)
         {
             //Position = Position + (Position - OldPosition) + Accceleration * Timestep^2
 
@@ -75,7 +79,7 @@ namespace Cyborg.Dynamics.Verlet
 
             //this is where all the constraints are calculated
             //_pos += vel + _accel * timeStep * timeStep;
-            _pos += vel  * timeStep * timeStep;
+            _pos += vel  * (1 - damping) * timeStep * timeStep;
 
             //record new position. 
             _oldPos = temp;

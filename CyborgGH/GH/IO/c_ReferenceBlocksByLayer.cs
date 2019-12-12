@@ -17,9 +17,9 @@ namespace Cyborg.CyborgGH.GH.IO
 {
     public class c_ReferenceBlocksByLayer : GH_Component
     {
-
-
         private bool computeParallel;
+        private bool includeHiddenObj;
+
         /// <summary>
         /// Initializes a new instance of the c_ReferenceBlocksByLayer class.
         /// </summary>
@@ -29,6 +29,7 @@ namespace Cyborg.CyborgGH.GH.IO
               Strings.LIB_NAME, Strings.SUB_IO)
         {
             computeParallel = true;
+            includeHiddenObj = true;
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Cyborg.CyborgGH.GH.IO
             else DA.SetDataTree(0, ProcessBlocks(layers));
         }
 
-        
+
 
         /// <summary>
         /// 
@@ -71,8 +72,22 @@ namespace Cyborg.CyborgGH.GH.IO
 
             // var inputList = RhinoDoc.ActiveDoc.Objects.ToList();
             var inputList = new List<RhinoObject>();
+
+            //settings for object enumeration, mainly to include hidden objects
+            var settings = new ObjectEnumeratorSettings();
+            if (includeHiddenObj) settings.HiddenObjects = true;
+            else settings.HiddenObjects = false;
+            settings.NormalObjects = true;
+            settings.ActiveObjects = true;
+            settings.DeletedObjects = false;
+            settings.IncludeGrips = false;
+            settings.IncludeLights = false;
+            settings.IncludePhantoms = false;
+
+            var objects = RhinoDoc.ActiveDoc.Objects.GetObjectList(settings).Where(o => o.ObjectType == ObjectType.InstanceReference);
+
             //for some reason, cant convert directly to list
-            foreach (var o in RhinoDoc.ActiveDoc.Objects) inputList.Add(o);
+            foreach (var o in objects) inputList.Add(o);
 
             //instantiate dictionary
             var result = new ConcurrentDictionary<int, IEnumerable<IGH_GeometricGoo>>(Environment.ProcessorCount, inputList.Count);
@@ -84,15 +99,13 @@ namespace Cyborg.CyborgGH.GH.IO
             Parallel.For(0, inputList.Count, i =>
             {
                 var o = inputList[i];
-                if (o.ObjectType == Rhino.DocObjects.ObjectType.InstanceReference)
-                {
-                    var tempgeom = o.GetSubObjects().Select(oo => oo.Geometry).ToArray();
-                    var templayer = o.GetSubObjects().Select(oo => RhinoDoc.ActiveDoc.Layers.FindIndex(oo.Attributes.LayerIndex).FullPath).ToArray();
 
-                    var outList = new List<IGH_GeometricGoo>();
-                    for (int j = 0; j < tempgeom.Length; j++) if (layers.Contains(templayer[j])) outList.Add(GH_Convert.ToGeometricGoo(tempgeom[j]));
-                    result[i] = outList;
-                }
+                var tempgeom = o.GetSubObjects().Select(oo => oo.Geometry).ToArray();
+                var templayer = o.GetSubObjects().Select(oo => RhinoDoc.ActiveDoc.Layers.FindIndex(oo.Attributes.LayerIndex).FullPath).ToArray();
+
+                var outList = new List<IGH_GeometricGoo>();
+                for (int j = 0; j < tempgeom.Length; j++) if (layers.Contains(templayer[j])) outList.Add(GH_Convert.ToGeometricGoo(tempgeom[j]));
+                result[i] = outList;
             }
             );
 
@@ -113,7 +126,6 @@ namespace Cyborg.CyborgGH.GH.IO
         /// <returns></returns>
         private GH_Structure<IGH_GeometricGoo> ProcessBlocks(List<string> layers)
         {
-
             var tree = new GH_Structure<IGH_GeometricGoo>();
             int ind = 0;
             foreach (var o in RhinoDoc.ActiveDoc.Objects)
@@ -145,13 +157,21 @@ namespace Cyborg.CyborgGH.GH.IO
         {
             base.AppendAdditionalComponentMenuItems(menu);
             Menu_AppendItem(menu, "Parallel Computing", OnClick_Parallel, true, computeParallel);
+            Menu_AppendItem(menu, "Include Hidden Objects", Onclick_HiddenObj, true, includeHiddenObj);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        private void Onclick_HiddenObj(object sender, EventArgs e)
+        {
+            includeHiddenObj = !includeHiddenObj;
+            this.ExpireSolution(true);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void OnClick_Parallel(object sender, EventArgs e)
         {
             computeParallel = !computeParallel;

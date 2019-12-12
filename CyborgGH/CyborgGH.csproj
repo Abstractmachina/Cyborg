@@ -69,6 +69,7 @@
     <Compile Include="GH\IO\c_ReferenceGroups.cs" />
     <Compile Include="GH\Conversion.cs" />
     <Compile Include="GH\SandboxGH.cs" />
+    <Compile Include="GH\Surfaces\c_ThickenSrf.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

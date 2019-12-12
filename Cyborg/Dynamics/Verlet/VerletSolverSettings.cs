@@ -18,7 +18,7 @@ namespace Cyborg.Dynamics.Verlet
             get { return _damping; }
             set
             {
-                if (value < 0) throw new ArgumentOutOfRangeException();
+                if (value < 0 && value > 1) throw new ArgumentOutOfRangeException("Damping value must be between 0 and 1.");
                 else _damping = value;
             }
         }
@@ -34,10 +34,12 @@ namespace Cyborg.Dynamics.Verlet
 
         #endregion
 
-        public VerletSolverSettings()
+        public VerletSolverSettings() : this(1.0, 0.0)
         {
-            _damping = 0;
-            _timeStep = 1;
+        }
+
+        public VerletSolverSettings(double timeStep) : this(timeStep, 0.0)
+        {
         }
 
         public VerletSolverSettings(double timeStep, double damping)

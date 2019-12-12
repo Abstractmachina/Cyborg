@@ -18,6 +18,7 @@ namespace Cyborg.GH
         #region To Rhino
         public static Vector3d Vector3d(Vec3 v) { return new Vector3d(v.X, v.Y, v.Z); }
         public static Vector2d Vector2d(Vec2 v) { return new Vector2d(v.X, v.Y); }
+        public static Point3d Point3d(Vec3 v) { return new Point3d(v.X, v.Y, v.Z); }
         #endregion
     }
 }

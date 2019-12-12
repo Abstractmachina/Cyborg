@@ -11,6 +11,7 @@ namespace Cyborg.Dynamics.Verlet
         private int _counter;
         private VerletSolverSettings _settings;
 
+        #region CONSTRUCTORS
         public VerletSolver()
         {
             _counter = 0;
@@ -22,7 +23,7 @@ namespace Cyborg.Dynamics.Verlet
             _counter = 0;
             _settings = settings;
         }
-
+        #endregion
 
         public void Step(List<VerletParticle> particles, List<IVerletConstraint> constraints)
         {
@@ -31,7 +32,6 @@ namespace Cyborg.Dynamics.Verlet
             _counter++;
         }
 
-
         public void ApplyConstraints(List<VerletParticle> particles, List<IVerletConstraint> constraints)
         {
             foreach (var c in constraints) c.Calculate(particles);
@@ -39,7 +39,7 @@ namespace Cyborg.Dynamics.Verlet
 
         private void UpdateParticles(IEnumerable<VerletParticle> particles)
         {
-            foreach (var p in particles) p.Update(1.0);
+            foreach (var p in particles) p.Update(1.0, _settings.Damping);
         }
     }
 }
