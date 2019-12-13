@@ -11,12 +11,18 @@ using Rhino.Commands;
 using Rhino.Geometry;
 using Rhino.DocObjects;
 
+using Cyborg.Core;
+
 namespace Cyborg.GH
 {
     public class SandboxGH
     {
 
-       
+        private void test(Vec3 v)
+        {
+
+            var ddddd = (Vec2) v;
+        }
 
     }
 }

@@ -95,6 +95,12 @@ namespace Cyborg.Core
             v.Z = scalar / v.Z;
             return v;
         }
+
+        public static explicit operator Vec2(Vec3 v)
+        {
+            return new Vec2(v.X, v.Y);
+        }
+
         #endregion
 
 

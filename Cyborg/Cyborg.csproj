@@ -44,6 +44,7 @@
     <Compile Include="Core\BoundingBox.cs" />
     <Compile Include="Core\Plane.cs" />
     <Compile Include="Core\Vec2.cs" />
+    <Compile Include="Core\Vec2i.cs" />
     <Compile Include="Core\Vec3.cs" />
     <Compile Include="Dynamics\Euler\Constraints\Angle.cs" />
     <Compile Include="Dynamics\Euler\Constraints\Constraint.cs" />
