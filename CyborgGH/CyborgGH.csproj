@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GrasshopperDebug|AnyCPU'">
+    <OutputPath>bin\GrasshopperDebug\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GH\Analysis\c_CalculateSlope.cs" />
+    <Compile Include="GH\Meshes\NGonBoundaries.cs" />
     <Compile Include="GH\Curves\c_CloseCurve.cs" />
     <Compile Include="GH\IO\c_ReferenceBlocksByLayer.cs" />
     <Compile Include="GH\IO\OBSOLETE_c_ReferenceBlocks_multi.cs" />

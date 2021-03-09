@@ -35,12 +35,17 @@ namespace Cyborg.Core
         public static readonly Vec3 ZAxis = new Vec3(0, 0, 1);
 
 
-
+        /// <summary>
+        /// Euclidian Length.
+        /// </summary>
         public double Length
         {
             get { return Math.Sqrt(X * X + Y * Y + Z * Z); }
         }
 
+        /// <summary>
+        /// Unit Vector.
+        /// </summary>
         public Vec3 Unit
         {
             get { return new Vec3(X / this.Length, Y / this.Length, Z / this.Length); }

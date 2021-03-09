@@ -14,5 +14,6 @@ namespace Cyborg.GH
         public static readonly string SUB_IO = "IO";
         public static readonly string SUB_SET = "Sets";
         public static readonly string SUB_ANA = "Analysis";
+        public static readonly string SUB_MSH = "Mesh";
     }
 }
